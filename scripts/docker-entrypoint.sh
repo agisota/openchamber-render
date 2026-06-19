@@ -11,9 +11,10 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 XDG_STATE_HOME="${XDG_STATE_HOME:-${HOME}/.local/state}"
 XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+NPM_CONFIG_PREFIX="${NPM_CONFIG_PREFIX:-${HOME}/.npm-global}"
 NPM_CONFIG_CACHE="${NPM_CONFIG_CACHE:-${OPENCHAMBER_DATA_ROOT}/npm-cache}"
-PATH="${HOME}/.local/bin:${PATH}"
-export XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME XDG_CACHE_HOME NPM_CONFIG_CACHE PATH
+PATH="${HOME}/.local/bin:${NPM_CONFIG_PREFIX}/bin:${PATH}"
+export XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME XDG_CACHE_HOME NPM_CONFIG_PREFIX NPM_CONFIG_CACHE PATH
 
 OPENCODE_CONFIG_DIR="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
 export OPENCODE_CONFIG_DIR
@@ -96,10 +97,12 @@ if [ "$#" -gt 0 ]; then
   exec "$@"
 fi
 
-set -- bun packages/web/bin/cli.js
+if ! bun packages/web/bin/cli.js stop --port "${PORT:-3000}" --quiet >/dev/null 2>&1; then
+  echo "[entrypoint] warning: could not stop stale OpenChamber instance, continuing"
+fi
+
+set -- bun packages/web/bin/cli.js serve --foreground --port "${PORT:-3000}" --host "$OPENCHAMBER_HOST"
 if [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
   set -- "$@" --ui-password "$OPENCHAMBER_UI_PASSWORD"
 fi
-"$@"
-
-exec bun packages/web/bin/cli.js logs
+exec "$@"

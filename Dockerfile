@@ -52,9 +52,10 @@ COPY --from=cloudflare/cloudflared@sha256:ba461b8aa9c042156dbd39c38657fe7431bafa
 
 ENV NODE_ENV=production
 
-COPY scripts/docker-entrypoint.sh /home/openchamber/openchamber-entrypoint.sh
+COPY --chown=openchamber:openchamber scripts/docker-entrypoint.sh /home/openchamber/openchamber-entrypoint.sh
 COPY --chown=openchamber:openchamber deploy/render /home/openchamber/deploy/render
-RUN chmod +x /home/openchamber/deploy/render/bootstrap.sh \
+RUN chmod +x /home/openchamber/openchamber-entrypoint.sh \
+  /home/openchamber/deploy/render/bootstrap.sh \
   /home/openchamber/deploy/render/bin/firecrawl-mcp-wrapper.sh
 
 COPY --from=deps /app/node_modules ./node_modules
