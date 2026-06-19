@@ -94,7 +94,8 @@ ensure_persistent_layout() {
 
 write_opencode_config() {
   config_path="${OPENCODE_CONFIG_DIR}/opencode.json"
-  managed_marker="${OPENCODE_CONFIG_DIR}/.openchamber-managed-opencode-config"
+  config_alias="${OPENCODE_CONFIG_DIR}/config.json"
+  manage_config="${OPENCHAMBER_MANAGE_OPENCODE_CONFIG:-true}"
   temp_file="$(mktemp)"
   cat > "$temp_file" <<EOF
 {
@@ -143,19 +144,20 @@ write_opencode_config() {
 EOF
 
   ensure_dir "$(dirname "$config_path")"
-  if [ ! -f "$config_path" ] || [ -f "$managed_marker" ] || grep -q "$BOOTSTRAP_MARKER" "$config_path" 2>/dev/null; then
-    cp "$temp_file" "$config_path"
-    printf '%s\n' "$BOOTSTRAP_MARKER" > "$managed_marker"
-  else
-    warn "not overwriting user-managed file ${config_path}"
-  fi
+
+  for target in "$config_path" "$config_alias"; do
+    managed_marker="${target}.openchamber-managed"
+
+    if [ "$manage_config" = "true" ] || [ ! -e "$target" ] || [ -f "$managed_marker" ] || grep -q "$BOOTSTRAP_MARKER" "$target" 2>/dev/null; then
+      rm -f "$target"
+      cp "$temp_file" "$target"
+      printf '%s\n' "$BOOTSTRAP_MARKER" > "$managed_marker"
+    else
+      warn "not overwriting user-managed file ${target}"
+    fi
+  done
 
   rm -f "$temp_file"
-
-  config_alias="${OPENCODE_CONFIG_DIR}/config.json"
-  if [ ! -e "$config_alias" ]; then
-    ln -s "$config_path" "$config_alias"
-  fi
 }
 
 write_global_agents() {
