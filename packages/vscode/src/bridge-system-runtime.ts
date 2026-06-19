@@ -303,6 +303,10 @@ export async function handleSystemBridgeMessage(
           : os.arch();
         const reportUsage = body.reportUsage !== false;
 
+        if (!deps.updateCheckUrl) {
+          return { id, type, success: true, data: { updateAvailable: false, disabled: true } };
+        }
+
         const installId = getOrCreateInstallId('vscode');
         const requestBody = {
           appType: 'vscode',

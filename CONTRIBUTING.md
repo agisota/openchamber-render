@@ -1,10 +1,10 @@
-# Contributing to OpenChamber
+# Contributing to Rox Space
 
 ## Getting Started
 
 ```bash
-git clone https://github.com/btriapitsyn/openchamber.git
-cd openchamber
+git clone <rox-space-repository-url>
+cd rox-space
 bun install
 ```
 
@@ -74,7 +74,7 @@ bun run lint:ui
 | `bun run electron:build` | Build packaged desktop app for the current OS |
 | `bun run vscode:build` | Build the VS Code extension |
 | `bun run vscode:package` | Package the VS Code extension as `.vsix` |
-| `bun run pack:web` | Create a package archive for `@openchamber/web` |
+| `bun run pack:web` | Create a package archive for the web runtime package |
 
 ## Platform Build Notes
 
@@ -144,9 +144,9 @@ You can still help:
 
 - Report bugs or UX issues — even "this felt confusing" is valuable feedback
 - Test on different devices, browsers, or OS versions
-- Suggest features or improvements via issues
-- Help others in Discord
+- Suggest features or improvements through the project tracker
+- Help others in the configured project support channel
 
 ## Questions?
 
-Open an [issue](https://github.com/btriapitsyn/openchamber/issues) or ask in [Discord](https://discord.gg/ZYRSdnwwKA).
+Use the configured project tracker or support channel for questions.

@@ -183,7 +183,7 @@ jobs:
             model_args=(--model "$OPENCODE_MODEL")
           fi
 
-          opencode run --agent pr-review "${model_args[@]}" "A pull request in the OpenChamber repository needs code review.
+          opencode run --agent pr-review "${model_args[@]}" "A pull request in the Rox Space repository needs code review.
 
           This may be a repeated review request. Before writing a new review, inspect prior PR comments, bot comments, reviews, inline comments, and the commit timeline via GitHub. Compare prior findings against commits pushed after those comments, then only repeat findings that still exist in the current diff/current file state.
 
@@ -215,7 +215,7 @@ jobs:
             | jq -s --arg created_at "$COMMAND_CREATED_AT" '[.[][] | select(.created_at > $created_at and .user.login == "openchamber-bot[bot]" and (.body | contains("<h3>Code Review Summary</h3>")))] | length')"
 
           if [ "$review_comment_count" -lt 1 ]; then
-            echo "Manual /oc-review completed without creating a new OpenChamber Bot PR comment." >&2
+            echo "Manual /oc-review completed without creating a new Rox Space Bot PR comment." >&2
             exit 1
           fi
 

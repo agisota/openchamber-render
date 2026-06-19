@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# OpenChamber Install Script
-# Usage: curl -fsSL https://raw.githubusercontent.com/btriapitsyn/openchamber/main/scripts/install.sh | bash
+# Rox Space Install Script
+# Usage: curl -fsSL <rox-space-install-script-url> | bash
 
 set -euo pipefail
 
@@ -156,7 +156,7 @@ main() {
   echo ""
   echo "  ╭───────────────────────────────────╮"
   echo "  │                                   │"
-  echo "  │   OpenChamber Installer           │"
+  echo "  │   Rox Space Installer           │"
   echo "  │   Web interface for OpenCode      │"
   echo "  │                                   │"
   echo "  ╰───────────────────────────────────╯"
@@ -176,16 +176,16 @@ main() {
   fi
   success "Node.js v$NODE_VERSION found"
 
-  # If OpenChamber is already installed, hand off to its own updater instead
+  # If Rox Space is already installed, hand off to its own updater instead
   # of guessing a package manager. `openchamber update` detects which manager
   # actually owns the existing global install and reinstalls with that one —
   # reinstalling with a different manager here would orphan files and break PATH.
   if command_exists "$BIN_NAME"; then
-    info "OpenChamber is already installed — updating via 'openchamber update'..."
+    info "Rox Space is already installed — updating via 'openchamber update'..."
     echo ""
     if openchamber update; then
       echo ""
-      success "OpenChamber is up to date!"
+      success "Rox Space is up to date!"
       exit 0
     fi
     echo ""
@@ -216,7 +216,7 @@ main() {
 
   # Install
   echo ""
-  info "Installing OpenChamber..."
+  info "Installing Rox Space..."
   echo "  Running: $INSTALL_CMD"
   echo ""
   
@@ -234,7 +234,7 @@ main() {
   ░▀▀▀░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀░▀░▀
 EOF
     printf '%b\n' "$NC"
-    success "OpenChamber installed successfully!"
+    success "Rox Space installed successfully!"
     echo ""
 
     # Verify the binary is actually reachable. Global installs frequently

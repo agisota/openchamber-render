@@ -1,15 +1,12 @@
 {
-  "name": "openchamber",
-  "displayName": "OpenChamber",
+  "name": "rox-space",
+  "displayName": "Rox Space",
   "description": "%extension.description%",
   "version": "1.13.2",
-  "publisher": "fedaykindev",
+  "publisher": "rox-space",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/btriapitsyn/openchamber.git"
-  },
-  "qna": "https://discord.gg/ZYRSdnwwKA",
+  "repository": null,
+  "qna": null,
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
@@ -29,7 +26,7 @@
     "groq",
     "assistant",
     "opencode",
-    "openchamber"
+    "rox-space"
   ],
   "icon": "assets/app-icon.png",
   "main": "./dist/extension.js",
@@ -44,7 +41,7 @@
       "activitybar": [
         {
           "id": "openchamber",
-          "title": "OpenChamber",
+          "title": "Rox Space",
           "icon": "assets/icon.svg"
         }
       ]
@@ -61,7 +58,7 @@
     "commands": [
       {
         "command": "openchamber.openSidebar",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.openSidebar.title%",
         "icon": {
           "light": "assets/icon.svg",
@@ -70,34 +67,34 @@
       },
       {
         "command": "openchamber.focusChat",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.focusChat.title%"
       },
       {
         "command": "openchamber.restartApi",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.restartApi.title%"
       },
       {
         "command": "openchamber.showOpenCodeStatus",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.showOpenCodeStatus.title%"
       },
       {
         "command": "openchamber.openAgentManager",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.openAgentManager.title%",
         "icon": "$(circuit-board)"
       },
       {
         "command": "openchamber.openActiveSessionInEditor",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.openActiveSessionInEditor.title%",
         "icon": "$(link-external)"
       },
       {
         "command": "openchamber.openNewSessionInEditor",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.openNewSessionInEditor.title%",
         "icon": {
           "light": "assets/icon.svg",
@@ -106,47 +103,47 @@
       },
       {
         "command": "openchamber.openCurrentOrNewSessionInEditor",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.openCurrentOrNewSessionInEditor.title%",
         "icon": "$(link-external)"
       },
       {
         "command": "openchamber.addToContext",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.addToContext.title%"
       },
       {
         "command": "openchamber.explain",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.explain.title%"
       },
       {
         "command": "openchamber.improveCode",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.improveCode.title%"
       },
       {
         "command": "openchamber.newSession",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.newSession.title%",
         "icon": "$(add)"
       },
       {
         "command": "openchamber.showSettings",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.showSettings.title%",
         "icon": "$(settings-gear)"
       },
       {
         "command": "openchamber.attachExplorerToChat",
-        "category": "OpenChamber",
+        "category": "Rox Space",
         "title": "%command.attachExplorerToChat.title%"
       }
     ],
     "submenus": [
       {
         "id": "openchamber.submenu",
-        "label": "OpenChamber"
+        "label": "Rox Space"
       }
     ],
     "menus": {
@@ -204,7 +201,7 @@
       ]
     },
     "configuration": {
-      "title": "OpenChamber",
+      "title": "Rox Space",
       "properties": {
         "openchamber.apiUrl": {
           "type": "string",

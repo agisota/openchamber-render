@@ -46,10 +46,10 @@ const shouldStartInBackground = (loginItemSettings = readLoginItemSettings()) =>
 };
 
 // Set the product name early so electron-log derives its log directory as
-// ~/Library/Logs/OpenChamber/ (not ~/Library/Logs/@openchamber/electron/).
-app.setName('OpenChamber');
+// ~/Library/Logs/Rox Space/ (not ~/Library/Logs/@openchamber/electron/).
+app.setName('Rox Space');
 if (isDev) {
-  app.setPath('userData', path.join(app.getPath('appData'), 'OpenChamber Dev'));
+  app.setPath('userData', path.join(app.getPath('appData'), 'Rox Space Dev'));
 }
 app.setAppUserModelId(APP_USER_MODEL_ID);
 app.commandLine.appendSwitch('proxy-bypass-list', '<-loopback>');
@@ -83,7 +83,7 @@ log.transports.console.level = isDev ? 'debug' : 'warn';
 
 // The in-process web server runs in this same Node process and uses plain
 // `console.log/warn/error`. Without piping console through electron-log,
-// that output never lands in ~/Library/Logs/OpenChamber/main.log and we
+// that output never lands in ~/Library/Logs/Rox Space/main.log and we
 // can't diagnose issues (e.g. OpenCode lifecycle, SSE disconnects) after
 // the fact. Route all console calls through electron-log so server-side
 // diagnostics are persisted.
@@ -154,10 +154,10 @@ const LOCAL_HOST_ID = 'local';
 const LOCAL_DESKTOP_CLIENT_KIND = 'desktop-local';
 const LOCAL_DESKTOP_CLIENT_DEDUPE_KEY = 'desktop-local';
 const ENV_OVERRIDE_HOST_ID = '__env';
-const CHANGELOG_URL = 'https://raw.githubusercontent.com/openchamber/openchamber/main/CHANGELOG.md';
-const GITHUB_BUG_REPORT_URL = 'https://github.com/openchamber/openchamber/issues/new?template=bug_report.yml';
-const GITHUB_FEATURE_REQUEST_URL = 'https://github.com/openchamber/openchamber/issues/new?template=feature_request.yml';
-const DISCORD_INVITE_URL = 'https://discord.gg/ZYRSdnwwKA';
+const CHANGELOG_URL = process.env.OPENCHAMBER_CHANGELOG_URL || '';
+const GITHUB_BUG_REPORT_URL = process.env.OPENCHAMBER_BUG_REPORT_URL || '';
+const GITHUB_FEATURE_REQUEST_URL = process.env.OPENCHAMBER_FEATURE_REQUEST_URL || '';
+const DISCORD_INVITE_URL = process.env.OPENCHAMBER_SUPPORT_URL || '';
 const INSTALLED_APPS_CACHE_TTL_SECS = 60 * 60 * 24;
 const INSTALLED_APPS_CACHE_FILE = 'discovered-apps.json';
 const OPENCODE_SHUTDOWN_GRACE_MS = 100;
@@ -220,7 +220,7 @@ const quitConfirmationMessage = () => {
   if (reasons.length === 0) {
     return 'Background processes (sidecar, SSH sessions) will be stopped.';
   }
-  return `OpenChamber detected ${reasons.join(', ')}. Quitting now will stop sidecar/background processes and may interrupt pending work.`;
+  return `Rox Space detected ${reasons.join(', ')}. Quitting now will stop sidecar/background processes and may interrupt pending work.`;
 };
 
 const shutdownBackgroundServices = () => {
@@ -311,8 +311,8 @@ const requestQuitWithConfirmation = async () => {
   try {
     const result = await dialog.showMessageBox({
       type: 'warning',
-      title: 'Quit OpenChamber?',
-      message: 'Quit OpenChamber?',
+      title: 'Quit Rox Space?',
+      message: 'Quit Rox Space?',
       detail: quitConfirmationMessage(),
       buttons: ['Quit', 'Cancel'],
       defaultId: 1,
@@ -960,7 +960,7 @@ const maybeShowNativeNotification = (rawInput) => {
 
   const title = typeof payload.title === 'string' && payload.title.trim()
     ? payload.title.trim()
-    : 'OpenChamber';
+    : 'Rox Space';
   const body = typeof payload.body === 'string' ? payload.body : '';
   const sessionId = typeof payload.sessionId === 'string' && payload.sessionId.trim()
     ? payload.sessionId.trim()
@@ -1406,7 +1406,7 @@ const buildStartupSplashHtml = () => {
   </head>
   <body>
     <div class="stack">
-      <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OpenChamber loading icon">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rox Space loading icon">
         <path d="M50 50 L8.432 26 L8.432 74 L50 98 Z" fill="var(--splash-face-fill)" stroke="var(--splash-stroke)" stroke-width="2" stroke-linejoin="round"/>
         <path d="M50 50 L39.608 44 L39.608 56 L50 62 Z" fill="var(--splash-cell-fill)" opacity="0.2"/>
         <path d="M39.608 44 L29.216 38 L29.216 50 L39.608 56 Z" fill="var(--splash-cell-fill)" opacity="0.45"/>
@@ -1507,7 +1507,7 @@ const loginRemoteAndIssueClientToken = async ({ url, password, trustDevice }) =>
       password: candidatePassword,
       trustDevice: trustDevice === true,
       issueClientToken: true,
-      clientLabel: 'OpenChamber Desktop',
+      clientLabel: 'Rox Space Desktop',
       ...(isLocalRuntimeUrl(baseUrl) ? {
         clientKind: LOCAL_DESKTOP_CLIENT_KIND,
         dedupeKey: LOCAL_DESKTOP_CLIENT_DEDUPE_KEY,
@@ -1537,7 +1537,7 @@ const loginRemoteAndIssueClientToken = async ({ url, password, trustDevice }) =>
       Cookie: cookie,
     },
     body: JSON.stringify({
-      label: 'OpenChamber Desktop',
+      label: 'Rox Space Desktop',
       ...(isLocalRuntimeUrl(baseUrl) ? {
         clientKind: LOCAL_DESKTOP_CLIENT_KIND,
         dedupeKey: LOCAL_DESKTOP_CLIENT_DEDUPE_KEY,
@@ -1715,7 +1715,7 @@ const confirmConnectDeepLink = async (payload) => {
   }
   const options = {
     type: 'warning',
-    title: 'Connect to OpenChamber server?',
+    title: 'Connect to Rox Space server?',
     message: `Connect to "${payload.label}"?`,
     detail:
       `This will add ${payload.serverUrl} as a remote instance and route this app's activity ` +
@@ -1906,7 +1906,7 @@ const createBrowserWindow = ({ label, restoreGeometry, url, runtimeConfig = {} }
   const autoHidesNativeMenuBar = process.platform !== 'darwin';
   const windowIconPath = getWindowIconPath();
   const options = {
-    title: 'OpenChamber',
+    title: 'Rox Space',
     ...(Number.isFinite(restoredBounds?.x) && Number.isFinite(restoredBounds?.y)
       ? { x: restoredBounds.x, y: restoredBounds.y }
       : {}),
@@ -2260,7 +2260,7 @@ const createMiniChatWindow = async ({ mode, sessionId = '', directory = '', proj
   // macOS vibrancy, on by default; users can disable it (Appearance settings).
   const useVibrancy = process.platform === 'darwin' && readSettingsRoot().desktopVibrancy !== false;
   const browserWindow = new BrowserWindow({
-    title: 'OpenChamber Mini Chat',
+    title: 'Rox Space Mini Chat',
     width: MINI_CHAT_WINDOW_WIDTH,
     height: MINI_CHAT_WINDOW_HEIGHT,
     minWidth: MINI_CHAT_MIN_WINDOW_WIDTH,
@@ -2516,6 +2516,8 @@ const setupAutoUpdater = () => {
 };
 
 const parseRelevantChangelogNotes = async (fromVersion, toVersion) => {
+  if (!CHANGELOG_URL) return null;
+
   try {
     const response = await fetch(CHANGELOG_URL, { signal: AbortSignal.timeout(10_000) });
     if (!response.ok) return null;
@@ -3580,7 +3582,7 @@ const handleInvoke = async (browserWindow, command, args = {}) => {
       if (applyUpdate && process.platform === 'darwin' && typeof app.isInApplicationsFolder === 'function') {
         try {
           if (!app.isInApplicationsFolder()) {
-            throw new Error('Desktop update requires OpenChamber.app to be installed in /Applications');
+            throw new Error('Desktop update requires Rox Space.app to be installed in /Applications');
           }
         } catch (error) {
           log.warn('[electron] desktop_restart blocked', error);
@@ -3801,7 +3803,7 @@ const buildMacMenu = () => {
     {
       label: app.name,
       submenu: [
-        { label: 'About OpenChamber', click: () => dispatchAction('about') },
+        { label: 'About Rox Space', click: () => dispatchAction('about') },
         {
           label: 'Check for Updates',
           click: () => dispatchCheckForUpdates(),
@@ -3885,11 +3887,12 @@ const buildMacMenu = () => {
         { label: 'Toggle Developer Tools', accelerator: 'Cmd+Alt+I', click: () => openDevToolsForMenuTarget() },
         { type: 'separator' },
         { label: 'Clear Cache', click: () => void handleInvoke(null, 'desktop_clear_cache') },
-        { type: 'separator' },
-        { label: 'Report a Bug', click: () => shell.openExternal(GITHUB_BUG_REPORT_URL) },
-        { label: 'Request a Feature', click: () => shell.openExternal(GITHUB_FEATURE_REQUEST_URL) },
-        { type: 'separator' },
-        { label: 'Join Discord', click: () => shell.openExternal(DISCORD_INVITE_URL) },
+        ...(GITHUB_BUG_REPORT_URL || GITHUB_FEATURE_REQUEST_URL || DISCORD_INVITE_URL ? [
+          { type: 'separator' },
+          ...(GITHUB_BUG_REPORT_URL ? [{ label: 'Report a Bug', click: () => shell.openExternal(GITHUB_BUG_REPORT_URL) }] : []),
+          ...(GITHUB_FEATURE_REQUEST_URL ? [{ label: 'Request a Feature', click: () => shell.openExternal(GITHUB_FEATURE_REQUEST_URL) }] : []),
+          ...(DISCORD_INVITE_URL ? [{ label: 'Support', click: () => shell.openExternal(DISCORD_INVITE_URL) }] : []),
+        ] : []),
       ],
     },
   ]);
@@ -3904,9 +3907,9 @@ const buildAutoHiddenMenu = () => {
 
   return Menu.buildFromTemplate([
     {
-      label: 'OpenChamber',
+      label: 'Rox Space',
       submenu: [
-        { label: 'About OpenChamber', click: () => dispatchAction('about') },
+        { label: 'About Rox Space', click: () => dispatchAction('about') },
         {
           label: 'Check for Updates',
           click: () => dispatchCheckForUpdates(),
@@ -3998,11 +4001,12 @@ const buildAutoHiddenMenu = () => {
         { label: 'Show Diagnostics', accelerator: 'Ctrl+Shift+L', click: () => dispatchAction('download-logs') },
         { type: 'separator' },
         { label: 'Clear Cache', click: () => void handleInvoke(null, 'desktop_clear_cache') },
-        { type: 'separator' },
-        { label: 'Report a Bug', click: () => shell.openExternal(GITHUB_BUG_REPORT_URL) },
-        { label: 'Request a Feature', click: () => shell.openExternal(GITHUB_FEATURE_REQUEST_URL) },
-        { type: 'separator' },
-        { label: 'Join Discord', click: () => shell.openExternal(DISCORD_INVITE_URL) },
+        ...(GITHUB_BUG_REPORT_URL || GITHUB_FEATURE_REQUEST_URL || DISCORD_INVITE_URL ? [
+          { type: 'separator' },
+          ...(GITHUB_BUG_REPORT_URL ? [{ label: 'Report a Bug', click: () => shell.openExternal(GITHUB_BUG_REPORT_URL) }] : []),
+          ...(GITHUB_FEATURE_REQUEST_URL ? [{ label: 'Request a Feature', click: () => shell.openExternal(GITHUB_FEATURE_REQUEST_URL) }] : []),
+          ...(DISCORD_INVITE_URL ? [{ label: 'Support', click: () => shell.openExternal(DISCORD_INVITE_URL) }] : []),
+        ] : []),
       ],
     },
   ]);

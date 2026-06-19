@@ -2,8 +2,8 @@
   "name": "@openchamber/electron",
   "version": "1.13.2",
   "private": true,
-  "description": "Electron desktop runtime for OpenChamber",
-  "author": "OpenChamber",
+  "description": "Electron desktop runtime for Rox Space",
+  "author": "Rox Space",
   "type": "module",
   "main": "./dist-bundle/main.mjs",
   "dependencies": {
@@ -36,8 +36,8 @@
     "lint": "node -e \"process.exit(0)\""
   },
   "build": {
-    "appId": "dev.openchamber.desktop",
-    "productName": "OpenChamber",
+    "appId": "one.rox.space.desktop",
+    "productName": "Rox Space",
     "files": [
       "dist-bundle/main.mjs",
       "preload.mjs"
@@ -118,11 +118,6 @@
           "path": "/Applications"
         }
       ]
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "openchamber",
-      "repo": "openchamber"
     }
   }
 }

@@ -11,13 +11,13 @@ const __dirname = path.dirname(__filename);
 const PACKAGE_NAME = '@openchamber/web';
 const PACKAGE_PATH_SEGMENTS = PACKAGE_NAME.split('/');
 const NPM_REGISTRY_URL = `https://registry.npmjs.org/${PACKAGE_NAME}`;
-const CHANGELOG_URL = 'https://raw.githubusercontent.com/btriapitsyn/openchamber/main/CHANGELOG.md';
+const CHANGELOG_URL = process.env.OPENCHAMBER_CHANGELOG_URL || '';
 let cachedDetectedPm = null;
 
 function getSpawnSyncBaseOptions() {
   return process.platform === 'win32' ? { windowsHide: true } : {};
 }
-const UPDATE_CHECK_URL = process.env.OPENCHAMBER_UPDATE_API_URL || 'https://api.openchamber.dev/v1/update/check';
+const UPDATE_CHECK_URL = process.env.OPENCHAMBER_UPDATE_API_URL || '';
 
 function getOpenChamberConfigDir() {
   if (process.platform === 'win32') {
@@ -85,6 +85,8 @@ function normalizeArch(value) {
 }
 
 async function checkForUpdatesFromApi(currentVersion, options = {}) {
+  if (!UPDATE_CHECK_URL) return null;
+
   try {
     const appType = normalizeAppType(options.appType);
     const hostPlatform = mapPlatform(process.platform);
@@ -691,6 +693,8 @@ function compareVersions(left, right) {
  * Fetch changelog notes between versions
  */
 export async function fetchChangelogNotes(fromVersion, toVersion) {
+  if (!CHANGELOG_URL) return undefined;
+
   try {
     const response = await fetch(CHANGELOG_URL, {
       signal: AbortSignal.timeout(10000),
