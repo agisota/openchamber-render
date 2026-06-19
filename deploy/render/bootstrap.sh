@@ -94,10 +94,11 @@ ensure_persistent_layout() {
 
 write_opencode_config() {
   config_path="${OPENCODE_CONFIG_DIR}/opencode.json"
-  install_managed_file "$config_path" "$BOOTSTRAP_MARKER" <<EOF
+  managed_marker="${OPENCODE_CONFIG_DIR}/.openchamber-managed-opencode-config"
+  temp_file="$(mktemp)"
+  cat > "$temp_file" <<EOF
 {
   "\$schema": "https://opencode.ai/config.json",
-  "${BOOTSTRAP_MARKER}": true,
   "model": "${OPENCODE_DEFAULT_MODEL}",
   "small_model": "${OPENCODE_DEFAULT_MODEL}",
   "provider": {
@@ -140,6 +141,16 @@ write_opencode_config() {
   }
 }
 EOF
+
+  ensure_dir "$(dirname "$config_path")"
+  if [ ! -f "$config_path" ] || [ -f "$managed_marker" ] || grep -q "$BOOTSTRAP_MARKER" "$config_path" 2>/dev/null; then
+    cp "$temp_file" "$config_path"
+    printf '%s\n' "$BOOTSTRAP_MARKER" > "$managed_marker"
+  else
+    warn "not overwriting user-managed file ${config_path}"
+  fi
+
+  rm -f "$temp_file"
 
   config_alias="${OPENCODE_CONFIG_DIR}/config.json"
   if [ ! -e "$config_alias" ]; then
