@@ -3,7 +3,7 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 
 import { isModuleCliExecution, normalizeCliEntryPath } from './cli-entry.js';
-import { assertAuthenticatedNetworkExposure, parseArgs } from './cli.js';
+import { assertAuthenticatedNetworkExposure, isCurrentProcessPid, parseArgs } from './cli.js';
 
 describe('cli args', () => {
   it('accepts legacy daemon flags as no-ops', () => {
@@ -102,6 +102,16 @@ describe('network-exposed auth validation', () => {
         delete process.env.OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN;
       }
     }
+  });
+});
+
+describe('serve PID file handling', () => {
+  it('treats a PID file for the current process as stale', () => {
+    expect(isCurrentProcessPid(1, 1)).toBe(true);
+  });
+
+  it('does not ignore a different running PID', () => {
+    expect(isCurrentProcessPid(2, 1)).toBe(false);
   });
 });
 

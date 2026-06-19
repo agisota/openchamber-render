@@ -2329,6 +2329,10 @@ function readPidFile(pidFilePath) {
   }
 }
 
+function isCurrentProcessPid(pid, currentPid = process.pid) {
+  return Number.isFinite(pid) && pid === currentPid;
+}
+
 function writePidFile(pidFilePath, pid, onNotice) {
   try {
     fs.writeFileSync(pidFilePath, String(pid), { mode: 0o600 });
@@ -3430,7 +3434,11 @@ const commands = {
     if (targetPort !== 0) {
       const pidFilePath = await getPidFilePath(targetPort);
       const existingPid = readPidFile(pidFilePath);
-      if (existingPid && isProcessRunning(existingPid)) {
+      if (isCurrentProcessPid(existingPid)) {
+        // Render persistent disks can preserve a PID 1 file from the previous
+        // container. The new foreground serve process is also PID 1.
+        removePidFile(pidFilePath);
+      } else if (existingPid && isProcessRunning(existingPid)) {
         throw new Error(`OpenChamber is already running on port ${targetPort} (PID: ${existingPid})`);
       }
 
@@ -5729,6 +5737,7 @@ export {
   commands,
   parseArgs,
   assertAuthenticatedNetworkExposure,
+  isCurrentProcessPid,
   hasUiPasswordConfigured,
   shouldDisplayTunnelQr,
   isValidTunnelDoctorResponse,
