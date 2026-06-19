@@ -1,12 +1,12 @@
 # Scheduled Tasks module
 
-Server-owned scheduled task runtime and routes for OpenChamber-only automation.
+Server-owned scheduled task runtime and routes for Rox Space-only automation.
 
 ## Scope
 
 - Per-project scheduled task persistence is owned by `packages/web/server/lib/projects/project-config.js`.
 - Runtime orchestration and execution is owned by this module.
-- This module is OpenChamber feature logic; it is intentionally separate from OpenCode proxy/runtime internals.
+- This module is Rox Space feature logic; it is intentionally separate from OpenCode proxy/runtime internals.
 
 ## Files
 
@@ -15,12 +15,12 @@ Server-owned scheduled task runtime and routes for OpenChamber-only automation.
   - Timer scheduling and queueing
   - Concurrency controls
   - Session create + prompt_async execution
-  - Emits OpenChamber task-run events
+  - Emits Rox Space task-run events
 
 - `packages/web/server/lib/scheduled-tasks/routes.js`
   - Scheduled task CRUD endpoints
   - Manual run endpoint
-  - OpenChamber events SSE stream endpoint
+  - Rox Space events SSE stream endpoint
 
 ## Public exports (runtime.js)
 

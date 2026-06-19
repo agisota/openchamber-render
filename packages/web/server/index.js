@@ -1088,7 +1088,7 @@ async function main(options = {}) {
     notificationTriggerRuntime.setGetIsWindowFocused(options.getIsWindowFocused);
   }
 
-  console.log(`Starting OpenChamber on port ${port === 0 ? 'auto' : port}`);
+  console.log(`Starting Rox Space on port ${port === 0 ? 'auto' : port}`);
 
   const sayTTSCapability = await detectSayTtsCapability(process);
 

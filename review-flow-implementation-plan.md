@@ -2,7 +2,7 @@
 
 ## Goal
 
-Build an end-to-end OpenChamber review handoff flow that lets one session implement changes and another normal session review them, with OpenChamber metadata connecting the two sessions invisibly.
+Build an end-to-end Rox Space review handoff flow that lets one session implement changes and another normal session review them, with Rox Space metadata connecting the two sessions invisibly.
 
 The agents must not see session IDs, metadata, linked-session wording, or routing details. They should only receive natural prompts:
 
@@ -130,7 +130,7 @@ The new handoff prompt should keep those ideas and make intent explicit:
 - Validation/test status if known from the session
 - Anything the reviewer should pay special attention to
 
-This is an implementation detail, not a risk. The prompt should be specific enough that the review agent can judge intent and implementation without needing private OpenChamber routing context.
+This is an implementation detail, not a risk. The prompt should be specific enough that the review agent can judge intent and implementation without needing private Rox Space routing context.
 
 ### Active Session Generation Concept
 
@@ -171,7 +171,7 @@ Relevant files:
 Current behavior:
 
 - `opencodeClient.createSession(...)` calls `client.session.create(...)` using the legacy OpenCode session API.
-- OpenCode supports `metadata` on that API, but OpenChamber currently only forwards `parentID` and `title`.
+- OpenCode supports `metadata` on that API, but Rox Space currently only forwards `parentID` and `title`.
 - `opencodeClient.updateSession(...)` currently only forwards `title` and `time.archived`.
 - OpenCode `metadata` update replaces the whole metadata object. It does not deep-merge.
 - `deleteSession(...)` and `deleteSessionInDirectory(...)` optimistically remove the session, then call `opencodeClient.deleteSession(...)`, and restore snapshots on failure.
@@ -257,7 +257,7 @@ Rules:
 Recommended helpers:
 
 ```ts
-type OpenChamberSessionMetadata = {
+type Rox SpaceSessionMetadata = {
   openchamber?: {
     kind?: 'review'
     originalSessionID?: string
@@ -273,7 +273,7 @@ Helper functions should live in a focused module, for example:
 
 Functions:
 
-- `getOpenChamberMetadata(session)`
+- `getRox SpaceMetadata(session)`
 - `isReviewSession(session)`
 - `getOriginalSessionID(session)`
 - `getReviewSessionID(session)`
@@ -344,9 +344,9 @@ Forward `metadata` when defined.
 
 Important: this method should still replace metadata because the upstream API replaces metadata. Do not hide this with an implicit merge here. Add merge behavior in a separate helper so call sites are explicit.
 
-### 3. Make Session Types Metadata-Aware In OpenChamber
+### 3. Make Session Types Metadata-Aware In Rox Space
 
-OpenCode SDK response types should include metadata in the current v2 SDK legacy `Session`, but verify local imports and generated types used by OpenChamber.
+OpenCode SDK response types should include metadata in the current v2 SDK legacy `Session`, but verify local imports and generated types used by Rox Space.
 
 Files to inspect/update:
 
@@ -405,7 +405,7 @@ Prepare a handoff for another agent to review this work.
 Suggested template:
 
 ```txt
-Produce a review handoff for another agent. Do not compact or mutate session history. Your output is an assistant message that OpenChamber will send to a separate reviewer agent.
+Produce a review handoff for another agent. Do not compact or mutate session history. Your output is an assistant message that Rox Space will send to a separate reviewer agent.
 
 Include:
 - The user's original intent and any later clarifications that changed the intent
@@ -418,7 +418,7 @@ Include:
 Formatting:
 - Concise markdown with clear sections
 - No preamble like "Here is a handoff"
-- Do not mention OpenChamber metadata, linked sessions, session IDs, or routing
+- Do not mention Rox Space metadata, linked sessions, session IDs, or routing
 - Respond in the same language the user used most in the conversation
 ```
 
@@ -475,9 +475,9 @@ Add strings for:
 
 Follow locale-ui-patterns. Do not hardcode user-facing text inside components.
 
-### 7. Register The New OpenChamber Slash Command
+### 7. Register The New Rox Space Slash Command
 
-There are two possible implementation paths. Pick the one matching how OpenChamber-owned commands are currently registered.
+There are two possible implementation paths. Pick the one matching how Rox Space-owned commands are currently registered.
 
 Likely locations:
 
@@ -485,14 +485,14 @@ Likely locations:
 - command autocomplete/store code around `useCommandsStore`
 - command rendering in `ChatInput` / command autocomplete components
 
-The command should appear as `/handoff-review` in OpenChamber command autocomplete.
+The command should appear as `/handoff-review` in Rox Space command autocomplete.
 
-It should be treated as an OpenChamber flow command, not only a raw OpenCode command, because after the handoff assistant output completes OpenChamber must create/reuse/open/send to the review session.
+It should be treated as an Rox Space flow command, not only a raw OpenCode command, because after the handoff assistant output completes Rox Space must create/reuse/open/send to the review session.
 
 Implementation options:
 
 1. Intercept `/handoff-review` in `routeMessage(...)` before normal OpenCode command lookup.
-2. Add it to the command store as an OpenChamber-owned command with a handler.
+2. Add it to the command store as an Rox Space-owned command with a handler.
 
 Prefer the smallest approach consistent with existing command architecture.
 
@@ -751,7 +751,7 @@ Manual validation checklist:
 - Do not allow multiple review sessions for one original session in this first implementation.
 - Do not expose metadata, linked sessions, or session IDs to agents.
 - Do not use parent/child session relationships for this feature.
-- Do not change OpenCode core or SDK unless OpenChamber cannot access metadata from the existing SDK types.
+- Do not change OpenCode core or SDK unless Rox Space cannot access metadata from the existing SDK types.
 - Do not make a background metadata reconciler.
 
 ## Main Implementation Risks To Watch While Coding

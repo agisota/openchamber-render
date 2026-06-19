@@ -8,22 +8,22 @@ Audience: contributors planning the next phase of the embedded preview feature.
 
 The current preview implementation (`packages/web/server/lib/preview/proxy-runtime.js`,
 `packages/ui/src/components/layout/ContextPanel.tsx`) terminates inside the
-OpenChamber server process and forwards requests to a **loopback** target
+Rox Space server process and forwards requests to a **loopback** target
 (`localhost`, `127.0.0.1`, `::1`, `0.0.0.0`). It works for these topologies:
 
 | Topology                                                                 | Works today? |
 | ------------------------------------------------------------------------ | ------------ |
-| Web UI in browser, OpenChamber server on same host as dev server         | yes          |
+| Web UI in browser, Rox Space server on same host as dev server         | yes          |
 | Electron desktop, dev server on same host                                | yes          |
 | VS Code extension, dev server on same host                               | yes          |
-| Mobile/tablet hitting OpenChamber over LAN, dev server on host           | yes          |
-| **Remote OpenChamber** (cloud / shared / tunneled), dev server on user's local machine | **no**       |
+| Mobile/tablet hitting Rox Space over LAN, dev server on host           | yes          |
+| **Remote Rox Space** (cloud / shared / tunneled), dev server on user's local machine | **no**       |
 
 The blocked case is real: a user runs `openchamber serve` on a remote box (or a
-hosted OpenChamber instance) but their dev server (`vite`, `next dev`, etc.)
+hosted Rox Space instance) but their dev server (`vite`, `next dev`, etc.)
 runs on their laptop. The proxy correctly refuses to talk to non-loopback
 targets — that is a deliberate SSRF gate, not a bug. We need a separate path
-that tunnels traffic from the remote OpenChamber back to the user's laptop
+that tunnels traffic from the remote Rox Space back to the user's laptop
 without weakening that gate.
 
 ## Non-goals
@@ -34,18 +34,18 @@ without weakening that gate.
   expose dev servers selected through the preview UI, scoped to the active
   user's session.
 - Providing a hosted relay service. The relay is something the user runs;
-  OpenChamber provides the agent + the server endpoints.
+  Rox Space provides the agent + the server endpoints.
 
 ## Constraints (carried forward from the loopback proxy)
 
-- Same-origin in the browser. The iframe must load from the OpenChamber
+- Same-origin in the browser. The iframe must load from the Rox Space
   origin so HTTPS, cookies, and CSP behave predictably.
 - Per-target cookie auth. A target id must not be guessable, and the cookie
   must be HttpOnly + scoped to that target's path.
 - WebSocket upgrade support (HMR is a hard requirement; without it the
   feature is uninteresting).
 - Strip frame-busting headers on the response.
-- Strip OpenChamber credentials before forwarding to the dev server.
+- Strip Rox Space credentials before forwarding to the dev server.
 - Survive partial failure cleanly: if the agent disconnects, the iframe
   should land on the existing "dev server is not responding" overlay, not a
   zombie hang.
@@ -66,11 +66,11 @@ shipping options:
 Responsibilities:
 
 - Open exactly one outbound, authenticated WebSocket to the remote
-  OpenChamber server (`wss://<host>/api/preview/agent`). Outbound-only — no
+  Rox Space server (`wss://<host>/api/preview/agent`). Outbound-only — no
   inbound port on the user's machine, so it works behind NAT, VPN,
   corporate firewall, etc.
 - Authenticate with a short-lived enrollment token issued by the remote
-  OpenChamber server (see "Pairing flow").
+  Rox Space server (see "Pairing flow").
 - Advertise the set of dev servers the user has authorised. Scope is
   loopback-only on the agent side (same allowlist as the existing proxy:
   `localhost`, `127.0.0.1`, `::1`, `0.0.0.0`). The agent never proxies to
@@ -84,11 +84,11 @@ Responsibilities:
 Deliberately out of scope for the agent:
 
 - TLS termination. The agent only talks to loopback over plain HTTP; the
-  outbound link to OpenChamber is TLS via the server's existing cert.
+  outbound link to Rox Space is TLS via the server's existing cert.
 - Anything that mutates the user's filesystem.
 - Acting as a general SOCKS/HTTP proxy. It is dev-server-scoped.
 
-### 2. Remote OpenChamber server (extends `proxy-runtime.js`)
+### 2. Remote Rox Space server (extends `proxy-runtime.js`)
 
 Adds two new surfaces alongside the existing loopback proxy:
 
@@ -307,12 +307,12 @@ sequence, not effort.
 ## Why not …?
 
 - **A reverse SSH tunnel from the agent.** Works but requires SSH server
-  on the OpenChamber host, exposes a port, and breaks the same-origin
+  on the Rox Space host, exposes a port, and breaks the same-origin
   guarantee unless we also reverse-proxy that port through the
-  OpenChamber HTTP server. The control-WebSocket design avoids all of
+  Rox Space HTTP server. The control-WebSocket design avoids all of
   that and keeps a single TLS endpoint.
 - **Cloudflare/ngrok-style hosted relay.** Would work but turns
-  OpenChamber into a service that depends on a third party (or on us
+  Rox Space into a service that depends on a third party (or on us
   hosting a relay). The agent design lets users run entirely
   self-hosted.
 - **WebRTC data channels.** Lower latency in theory, much harder to debug
