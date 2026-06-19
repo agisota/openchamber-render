@@ -23,7 +23,7 @@ const sessionState = {
   availableWorktrees: [] as WorktreeMetadata[],
 };
 
-mock.module('@/lib/openchamberConfig', () => ({
+mock.module('@/lib/roxSpaceConfig', () => ({
   substituteCommandVariables: (command: string) => command,
 }));
 

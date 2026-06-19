@@ -33,7 +33,7 @@ mock.module('@/sync/session-ui-store', () => ({
   routeMessage: mock(() => Promise.resolve()),
   useSessionUIStore: {
     getState: () => ({
-      markSessionAsOpenChamberCreated: mock(() => undefined),
+      markSessionAsRoxSpaceCreated: mock(() => undefined),
       setWorktreeMetadata: (sessionId: string, metadata: { path: string }) => {
         worktreeMetadataCalls.push({ sessionId, path: metadata.path });
       },
@@ -63,6 +63,14 @@ mock.module('@/lib/opencode/client', () => ({
 
 mock.module('@/lib/gitApi', () => ({
   checkIsGitRepository: mock(() => Promise.resolve(isGitRepository)),
+  deleteRemoteBranch: mock(() => Promise.resolve({ success: true })),
+  git: {
+    worktree: {
+      list: mock(() => Promise.resolve([])),
+      create: mock(() => Promise.resolve({ success: true })),
+      remove: mock(() => Promise.resolve({ success: true })),
+    },
+  },
 }));
 
 mock.module('@/lib/worktrees/worktreeCreate', () => ({
@@ -72,10 +80,13 @@ mock.module('@/lib/worktrees/worktreeCreate', () => ({
 
 mock.module('@/lib/worktrees/worktreeStatus', () => ({
   getRootBranch: mock(() => Promise.resolve('main')),
+  invalidateResolvedProjectRootCache: mock(),
+  resolveProjectRoot: (directory: string) => Promise.resolve(directory),
 }));
 
-mock.module('@/lib/openchamberConfig', () => ({
+mock.module('@/lib/roxSpaceConfig', () => ({
   saveWorktreeSetupCommands: mock(() => Promise.resolve()),
+  substituteCommandVariables: (command: string) => command,
 }));
 
 mock.module('./useDirectoryStore', () => ({

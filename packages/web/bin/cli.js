@@ -289,7 +289,7 @@ function normalizeServerUrlForConnection(value) {
   }
 }
 
-function getOpenChamberDataDir() {
+function getRoxSpaceDataDir() {
   return process.env.OPENCHAMBER_DATA_DIR
     ? path.resolve(process.env.OPENCHAMBER_DATA_DIR)
     : path.join(os.homedir(), '.config', 'openchamber');
@@ -305,7 +305,7 @@ function buildClientConnectionPayload({ serverUrl, token, label }) {
 }
 
 function formatUnsafePortWarning(port) {
-  return `Port ${port} is browser-unsafe (ERR_UNSAFE_PORT) and is not supported for OpenChamber UI at ${buildLocalUrl(port, '/')}.`;
+  return `Port ${port} is browser-unsafe (ERR_UNSAFE_PORT) and is not supported for Rox Space UI at ${buildLocalUrl(port, '/')}.`;
 }
 
 function assertSafeBrowserPort(port, { context = 'This action' } = {}) {
@@ -1027,7 +1027,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 
 function showHelp() {
   console.log(`
- OpenChamber - Web interface for the OpenCode AI coding agent
+ Rox Space - Web interface for the OpenCode AI coding agent
 
 USAGE:
   openchamber [COMMAND] [OPTIONS]
@@ -1039,7 +1039,7 @@ COMMANDS:
   status         Show server status
   tunnel         Tunnel lifecycle commands
   startup        Manage launch at system startup
-  logs           Tail OpenChamber logs
+  logs           Tail Rox Space logs
   connect-url    Generate URL/QR for connecting another client
   update         Check for and install updates
 
@@ -1060,7 +1060,7 @@ ENVIRONMENT:
   OPENCHAMBER_HOST             Bind address (e.g. 0.0.0.0 for all interfaces)
   OPENCHAMBER_UI_PASSWORD      Alternative to --ui-password flag
   OPENCHAMBER_API_ONLY         Set to true/1 to start API routes only
-  OPENCHAMBER_DATA_DIR         Override OpenChamber data directory
+  OPENCHAMBER_DATA_DIR         Override Rox Space data directory
   OPENCODE_HOST               External OpenCode server base URL, e.g. http://hostname:4096
   OPENCODE_PORT               Port of external OpenCode server to connect to
   OPENCODE_SKIP_START          Skip starting OpenCode, use external server
@@ -1073,7 +1073,7 @@ EXAMPLES:
   openchamber serve --foreground # Start in foreground (for systemd Type=simple)
   openchamber connect-url --port 3000 --qr
   openchamber connect-url --server https://openchamber.example.com
-  openchamber startup enable     # Start OpenChamber at user login
+  openchamber startup enable     # Start Rox Space at user login
   openchamber tunnel help        # Show tunnel lifecycle help
   openchamber logs               # Follow logs for latest running instance
 `);
@@ -1081,7 +1081,7 @@ EXAMPLES:
 
 function showStartupHelp() {
   console.log(`
- OpenChamber Startup Commands
+ Rox Space Startup Commands
 
 USAGE:
   openchamber startup <SUBCOMMAND> [OPTIONS]
@@ -1110,14 +1110,14 @@ EXAMPLES:
 
 function showConnectUrlHelp() {
   console.log(`
- OpenChamber Connect URL
+ Rox Space Connect URL
 
 USAGE:
   openchamber connect-url [OPTIONS]
 
 DESCRIPTION:
   Generate an openchamber:// connection link for adding this server to another
-  OpenChamber app. If no server is running on the selected port, it starts one.
+  Rox Space app. If no server is running on the selected port, it starts one.
 
 OPTIONS:
   -p, --port <port>       Server port to use or start (default: ${DEFAULT_PORT})
@@ -1159,7 +1159,7 @@ SUBCOMMANDS:
   profile     Manage saved managed-remote profiles
 
 COMMON OPTIONS:
-  -p, --port              Target OpenChamber instance port
+  -p, --port              Target Rox Space instance port
   --host                  Bind address when auto-starting an instance
   --lan                   Bind to 0.0.0.0 when auto-starting an instance
   --ui-password           Protect browser UI when auto-starting an instance
@@ -1189,7 +1189,7 @@ OUTPUT OPTIONS:
   --json                  Output machine-readable JSON
 
 BEHAVIOR NOTES:
-  - One active tunnel per OpenChamber instance.
+  - One active tunnel per Rox Space instance.
   - Starting a different mode/provider replaces the current tunnel and revokes old connect links/sessions.
   - Connect links are one-time; generating a new link revokes the previous unused link.
 
@@ -1287,7 +1287,7 @@ _openchamber() {
     'restart:Stop and start the server'
     'status:Show server status'
     'tunnel:Tunnel lifecycle commands'
-    'logs:Tail OpenChamber logs'
+    'logs:Tail Rox Space logs'
     'update:Check for and install updates'
   )
 
@@ -1935,9 +1935,9 @@ async function resolveAvailablePort(desiredPort, explicitPort = false, onNotice)
   const occupant = await fetchSystemInfoFromPort(startPort);
   let message;
   if (occupant?.runtime === 'desktop') {
-    message = `Port ${startPort} is used by OpenChamber Desktop; using a free port`;
+    message = `Port ${startPort} is used by Rox Space Desktop; using a free port`;
   } else if (occupant?.runtime) {
-    message = `Port ${startPort} is used by an existing OpenChamber instance; using a free port`;
+    message = `Port ${startPort} is used by an existing Rox Space instance; using a free port`;
   } else {
     message = `Port ${startPort} in use; using a free port`;
   }
@@ -2020,7 +2020,7 @@ function getStartupEnvFilePath() {
 }
 
 function getMacosStartupWrapperPath() {
-  return path.join(getDataDir(), 'bin', 'OpenChamber');
+  return path.join(getDataDir(), 'bin', 'Rox Space');
 }
 
 function collectStartupEnv(options = {}) {
@@ -2142,7 +2142,7 @@ function buildMacosLaunchAgent(options = {}) {
   const wrapperPath = writeMacosStartupWrapper(options);
   const args = [wrapperPath];
   const env = collectStartupEnv(options);
-  const logDir = path.join(os.homedir(), 'Library', 'Logs', 'OpenChamber');
+  const logDir = path.join(os.homedir(), 'Library', 'Logs', 'Rox Space');
   const argXml = args.map((arg) => `    <string>${escapeXml(arg)}</string>`).join('\n');
   const envXml = Object.entries(env).length > 0
     ? `  <key>EnvironmentVariables</key>\n  <dict>\n${Object.entries(env).map(([key, value]) => `    <key>${escapeXml(key)}</key>\n    <string>${escapeXml(value)}</string>`).join('\n')}\n  </dict>\n`
@@ -2178,7 +2178,7 @@ function buildSystemdUserService(options = {}) {
   const args = buildStartupArgs(options).map((arg) => `"${systemdEscapeArg(arg)}"`).join(' ');
   const envFilePath = getStartupEnvFilePath();
   return `[Unit]
-Description=OpenChamber web server
+Description=Rox Space web server
 After=network-online.target
 
 [Service]
@@ -2250,7 +2250,7 @@ function enableStartupService(options = {}) {
   if (paths.platform === 'macos') {
     removeStartupEnvFile();
     fs.mkdirSync(path.dirname(paths.servicePath), { recursive: true, mode: 0o700 });
-    fs.mkdirSync(path.join(os.homedir(), 'Library', 'Logs', 'OpenChamber'), { recursive: true, mode: 0o700 });
+    fs.mkdirSync(path.join(os.homedir(), 'Library', 'Logs', 'Rox Space'), { recursive: true, mode: 0o700 });
     fs.writeFileSync(paths.servicePath, buildMacosLaunchAgent(options), { mode: 0o600 });
     runStartupCommand('/bin/launchctl', ['bootout', `gui/${process.getuid()}`, paths.servicePath], { allowFailure: true });
     runStartupCommand('/bin/launchctl', ['bootstrap', `gui/${process.getuid()}`, paths.servicePath]);
@@ -2859,7 +2859,7 @@ async function resolveTargetInstance({
 
   if (options.all && requireAll) {
     if (running.length === 0) {
-      throw new Error('No running OpenChamber instance found. Start one with `openchamber serve`.');
+      throw new Error('No running Rox Space instance found. Start one with `openchamber serve`.');
     }
     return running;
   }
@@ -2872,11 +2872,11 @@ async function resolveTargetInstance({
         if (!attachability.attachable) {
           if (attachability.reason === 'desktop') {
             throw new Error(
-              `Port ${options.port} is used by OpenChamber Desktop app. Tunnel attach requires a CLI instance from \`openchamber serve\`.`
+              `Port ${options.port} is used by Rox Space Desktop app. Tunnel attach requires a CLI instance from \`openchamber serve\`.`
             );
           }
           throw new Error(
-            `Port ${options.port} is not an attachable OpenChamber tunnel instance. Ensure it is healthy and running OpenChamber CLI runtime.`
+            `Port ${options.port} is not an attachable Rox Space tunnel instance. Ensure it is healthy and running Rox Space CLI runtime.`
           );
         }
       }
@@ -2887,7 +2887,7 @@ async function resolveTargetInstance({
       const systemInfo = await fetchSystemInfoFromPort(options.port);
       if (systemInfo?.runtime === 'desktop') {
         throw new Error(
-          `Port ${options.port} is used by OpenChamber Desktop app. Tunnel attach requires a CLI instance from \`openchamber serve\`.`
+          `Port ${options.port} is used by Rox Space Desktop app. Tunnel attach requires a CLI instance from \`openchamber serve\`.`
         );
       }
     }
@@ -2907,7 +2907,7 @@ async function resolveTargetInstance({
       const started = running.find((entry) => entry.port === options.port);
       if (started) return { ...started, autoStarted: true };
     }
-    throw new Error(`No running OpenChamber instance found on port ${options.port}.`);
+    throw new Error(`No running Rox Space instance found on port ${options.port}.`);
   }
 
   if (rejectDesktopRuntime) {
@@ -2929,7 +2929,7 @@ async function resolveTargetInstance({
 
     if (attachableEntries.length > 1) {
       const ports = attachableEntries.map((entry) => entry.port).join(', ');
-      throw new Error(`Multiple attachable OpenChamber instances found: ${ports}. Use --port <port> or --all.`);
+      throw new Error(`Multiple attachable Rox Space instances found: ${ports}. Use --port <port> or --all.`);
     }
 
     if (allowAutoStart) {
@@ -2946,10 +2946,10 @@ async function resolveTargetInstance({
     }
 
     if (sawDesktop) {
-      throw new Error('Only OpenChamber Desktop instance(s) detected. Tunnel attach requires a CLI instance from `openchamber serve`.');
+      throw new Error('Only Rox Space Desktop instance(s) detected. Tunnel attach requires a CLI instance from `openchamber serve`.');
     }
 
-    throw new Error('No attachable OpenChamber instance found. Start one with `openchamber serve`.');
+    throw new Error('No attachable Rox Space instance found. Start one with `openchamber serve`.');
   }
 
   if (running.length === 1) {
@@ -2968,11 +2968,11 @@ async function resolveTargetInstance({
       const started = running.find((entry) => entry.port === startedPort) || getLatestInstance(running);
       if (started) return { ...started, autoStarted: true };
     }
-    throw new Error('No running OpenChamber instance found. Start one with `openchamber serve`.');
+    throw new Error('No running Rox Space instance found. Start one with `openchamber serve`.');
   }
 
   const ports = running.map((entry) => entry.port).join(', ');
-  throw new Error(`Multiple OpenChamber instances found: ${ports}. Use --port <port> or --all.`);
+  throw new Error(`Multiple Rox Space instances found: ${ports}. Use --port <port> or --all.`);
 }
 
 async function resolveTunnelReadEntries(options) {
@@ -2981,13 +2981,13 @@ async function resolveTunnelReadEntries(options) {
   if (options.explicitPort) {
     const found = running.find((entry) => entry.port === options.port);
     if (!found) {
-      throw new Error(`No running OpenChamber instance found on port ${options.port}.`);
+      throw new Error(`No running Rox Space instance found on port ${options.port}.`);
     }
     return [found];
   }
 
   if (running.length === 0) {
-    throw new Error('No running OpenChamber instance found. Start one with `openchamber serve`.');
+    throw new Error('No running Rox Space instance found. Start one with `openchamber serve`.');
   }
 
   return running;
@@ -3428,7 +3428,7 @@ const commands = {
     const targetPort = await resolveAvailablePort(options.port, explicitPort, emitNotice);
 
     if (targetPort !== 0 && !options.suppressUnsafePortWarning) {
-      assertSafeBrowserPort(targetPort, { context: 'OpenChamber serve' });
+      assertSafeBrowserPort(targetPort, { context: 'Rox Space serve' });
     }
 
     if (targetPort !== 0) {
@@ -3439,18 +3439,18 @@ const commands = {
         // container. The new foreground serve process is also PID 1.
         removePidFile(pidFilePath);
       } else if (existingPid && isProcessRunning(existingPid)) {
-        throw new Error(`OpenChamber is already running on port ${targetPort} (PID: ${existingPid})`);
+        throw new Error(`Rox Space is already running on port ${targetPort} (PID: ${existingPid})`);
       }
 
       if (explicitPort && !(await isPortAvailable(targetPort, options.host))) {
         const systemInfo = await fetchSystemInfoFromPort(targetPort);
         if (systemInfo?.runtime === 'desktop') {
           throw new Error(
-            `Port ${targetPort} is used by OpenChamber Desktop app. Choose another port or stop the desktop app.`
+            `Port ${targetPort} is used by Rox Space Desktop app. Choose another port or stop the desktop app.`
           );
         }
         if (systemInfo?.runtime) {
-          throw new Error(`OpenChamber is already running on port ${targetPort}. Use \`openchamber status\` or \`openchamber stop --port ${targetPort}\`.`);
+          throw new Error(`Rox Space is already running on port ${targetPort}. Use \`openchamber status\` or \`openchamber stop --port ${targetPort}\`.`);
         }
         throw new Error(`Port ${targetPort} is already in use by another process.`);
       }
@@ -3539,7 +3539,7 @@ const commands = {
       }
 
       if (!isQuietMode(options)) {
-        console.log(`Starting OpenChamber on port ${targetPort === 0 ? 'auto' : targetPort} (foreground)`);
+        console.log(`Starting Rox Space on port ${targetPort === 0 ? 'auto' : targetPort} (foreground)`);
       }
 
       const effectiveHost = typeof options.host === 'string' && options.host.length > 0
@@ -3640,7 +3640,7 @@ const commands = {
     });
 
     child.unref();
-    serveSpin?.start(`Starting OpenChamber on port ${targetPort === 0 ? 'auto' : targetPort}...`);
+    serveSpin?.start(`Starting Rox Space on port ${targetPort === 0 ? 'auto' : targetPort}...`);
 
     let resolvedPort;
     try {
@@ -3649,7 +3649,7 @@ const commands = {
         const timeout = setTimeout(() => {
           if (settled) return;
           settled = true;
-          reject(new Error(`OpenChamber daemon did not report ready within ${DAEMON_READY_TIMEOUT_MS / 1000}s`));
+          reject(new Error(`Rox Space daemon did not report ready within ${DAEMON_READY_TIMEOUT_MS / 1000}s`));
         }, DAEMON_READY_TIMEOUT_MS);
 
         child.on('message', (msg) => {
@@ -3672,7 +3672,7 @@ const commands = {
           if (settled) return;
           settled = true;
           clearTimeout(timeout);
-          reject(new Error(`OpenChamber daemon exited before reporting ready${signal ? ` (${signal})` : ` (code ${code ?? 'unknown'})`}`));
+          reject(new Error(`Rox Space daemon exited before reporting ready${signal ? ` (${signal})` : ` (code ${code ?? 'unknown'})`}`));
         });
       });
     } catch (error) {
@@ -3701,7 +3701,7 @@ const commands = {
     }
 
     if (!isProcessRunning(child.pid)) {
-      serveSpin?.error('Failed to start OpenChamber');
+      serveSpin?.error('Failed to start Rox Space');
       throw new Error('Failed to start server in daemon mode');
     }
 
@@ -3740,7 +3740,7 @@ const commands = {
     serveSpin?.clear();
 
     if (!options.suppressStartupSummary && showOutput) {
-      clackIntro('OpenChamber Started');
+      clackIntro('Rox Space Started');
       logStatus('success', `port ${serveResult.port} (PID: ${serveResult.pid})`);
       logStatus('info', `visit: ${serveResult.url}`);
       logStatus('info', `logs: ${serveResult.logs}`);
@@ -3751,7 +3751,7 @@ const commands = {
   },
 
   async 'connect-url'(options = {}) {
-    assertSafeBrowserPort(options.port, { context: 'OpenChamber connect-url' });
+    assertSafeBrowserPort(options.port, { context: 'Rox Space connect-url' });
     const explicitServerUrl = options.server ? normalizeServerUrlForConnection(options.server) : null;
     if (options.server && !explicitServerUrl) {
       throw new TunnelCliError('Invalid --server URL. Use an http:// or https:// URL.', EXIT_CODE.USAGE_ERROR);
@@ -3761,12 +3761,12 @@ const commands = {
       ? { serverUrl: explicitServerUrl, source: 'explicit' }
       : await resolveConnectUrlServerUrl(options);
     const serverUrl = resolvedServerUrl.serverUrl;
-    const label = options.name || `OpenChamber ${serverUrl}`;
+    const label = options.name || `Rox Space ${serverUrl}`;
     const runtime = createRemoteClientAuthRuntime({
       fsPromises: fs.promises,
       path,
       crypto,
-      storePath: path.join(getOpenChamberDataDir(), REMOTE_CLIENTS_FILE_NAME),
+      storePath: path.join(getRoxSpaceDataDir(), REMOTE_CLIENTS_FILE_NAME),
     });
     const result = await runtime.createClient({ label });
     const connectUrl = buildClientConnectionPayload({ serverUrl, token: result.token, label });
@@ -3781,18 +3781,18 @@ const commands = {
       return;
     }
 
-    clackIntro('OpenChamber connect URL');
+    clackIntro('Rox Space connect URL');
     if (serverState.autoStarted) {
-      logStatus('success', `started OpenChamber on port ${options.port}`);
+      logStatus('success', `started Rox Space on port ${options.port}`);
     }
     logStatus('success', connectUrl);
     clackLog.info(`Server URL: ${serverUrl}`);
     if (resolvedServerUrl.source === 'lan-detected') {
-      clackLog.info('Detected a LAN address because OpenChamber is bound to all interfaces. Use --server to override it.');
+      clackLog.info('Detected a LAN address because Rox Space is bound to all interfaces. Use --server to override it.');
     } else if (resolvedServerUrl.source === 'loopback-fallback') {
-      clackLog.warn('OpenChamber is bound to all interfaces, but no LAN address was detected. Use --server to provide a reachable URL.');
+      clackLog.warn('Rox Space is bound to all interfaces, but no LAN address was detected. Use --server to provide a reachable URL.');
     }
-    clackLog.info('Copy this connection link into another OpenChamber client. The token is shown only once.');
+    clackLog.info('Copy this connection link into another Rox Space client. The token is shown only once.');
     if (options.qr === true) {
       await displayTunnelQrCode(connectUrl);
     }
@@ -3825,7 +3825,7 @@ const commands = {
     };
 
     if (showOutput) {
-      clackIntro('OpenChamber Stop');
+      clackIntro('Rox Space Stop');
     }
 
     let runningInstances = await discoverRunningInstances();
@@ -3834,7 +3834,7 @@ const commands = {
         printJson({ stoppedCount: 0, results: jsonResults });
       }
       if (showOutput) {
-        logStatus('info', 'No running OpenChamber instances found');
+        logStatus('info', 'No running Rox Space instances found');
         finish('nothing to stop');
       }
       printQuietStopResults();
@@ -3848,10 +3848,10 @@ const commands = {
         if (systemInfo?.runtime === 'desktop') {
           jsonResults.push({ port: options.port, runtime: 'desktop', stopped: false, reason: 'desktop-managed' });
           if (isJsonMode(options)) {
-            printJson({ stoppedCount: 0, results: jsonResults, messages: [{ level: 'warning', code: 'DESKTOP_MANAGED_PORT', message: `Port ${options.port} is managed by OpenChamber Desktop and cannot be stopped with this command.` }] });
+            printJson({ stoppedCount: 0, results: jsonResults, messages: [{ level: 'warning', code: 'DESKTOP_MANAGED_PORT', message: `Port ${options.port} is managed by Rox Space Desktop and cannot be stopped with this command.` }] });
           }
           if (showOutput) {
-            logStatus('warning', `port ${options.port} is managed by OpenChamber Desktop`, 'cannot be stopped with this command');
+            logStatus('warning', `port ${options.port} is managed by Rox Space Desktop`, 'cannot be stopped with this command');
             finish('no changes applied');
           }
           printQuietStopResults();
@@ -3861,9 +3861,9 @@ const commands = {
         if (systemInfo?.runtime) {
           const unmanagedStopSpin = showOutput ? createSpinner(options) : null;
           if (showOutput && !unmanagedStopSpin) {
-            logStatus('info', `found unmanaged OpenChamber instance on port ${options.port}`, 'attempting shutdown');
+            logStatus('info', `found unmanaged Rox Space instance on port ${options.port}`, 'attempting shutdown');
           }
-          unmanagedStopSpin?.start(`Stopping unmanaged OpenChamber on port ${options.port}...`);
+          unmanagedStopSpin?.start(`Stopping unmanaged Rox Space on port ${options.port}...`);
           const requested = await requestServerShutdown(options.port);
 
           if (Number.isFinite(systemInfo.pid) && isProcessRunning(systemInfo.pid)) {
@@ -3876,13 +3876,13 @@ const commands = {
 
           const stopped = await isPortAvailable(options.port);
           if (stopped) {
-            unmanagedStopSpin?.stop(`Stopped unmanaged OpenChamber on port ${options.port}`);
+            unmanagedStopSpin?.stop(`Stopped unmanaged Rox Space on port ${options.port}`);
             jsonResults.push({ port: options.port, runtime: 'unmanaged', stopped: true });
             if (isJsonMode(options)) {
               printJson({ stoppedCount: 1, results: jsonResults });
             }
             if (showOutput && !unmanagedStopSpin) {
-              logStatus('success', `stopped OpenChamber on port ${options.port}`);
+              logStatus('success', `stopped Rox Space on port ${options.port}`);
               finish('stop complete');
             }
             printQuietStopResults();
@@ -3903,18 +3903,18 @@ const commands = {
             }
             printQuietStopResults();
           } else {
-            unmanagedStopSpin?.error(`Could not stop OpenChamber on port ${options.port}`);
+            unmanagedStopSpin?.error(`Could not stop Rox Space on port ${options.port}`);
             jsonResults.push({ port: options.port, runtime: 'unmanaged', stopped: false, reason: 'stop-failed' });
             if (isJsonMode(options)) {
               printJson({
                 status: 'error',
                 stoppedCount: 0,
                 results: jsonResults,
-                messages: [{ level: 'error', code: 'STOP_FAILED', message: `Could not stop OpenChamber on port ${options.port}.` }],
+                messages: [{ level: 'error', code: 'STOP_FAILED', message: `Could not stop Rox Space on port ${options.port}.` }],
               });
             }
             if (showOutput && !unmanagedStopSpin) {
-              logStatus('error', `could not stop OpenChamber on port ${options.port}`);
+              logStatus('error', `could not stop Rox Space on port ${options.port}`);
               finish('failed');
             }
             printQuietStopResults();
@@ -3927,7 +3927,7 @@ const commands = {
           printJson({ stoppedCount: 0, results: jsonResults });
         }
         if (showOutput) {
-          logStatus('info', `no OpenChamber instance found on port ${options.port}`);
+          logStatus('info', `no Rox Space instance found on port ${options.port}`);
           finish('nothing to stop');
         }
         printQuietStopResults();
@@ -3940,7 +3940,7 @@ const commands = {
       if (showOutput && !stopSpin) {
         logStatus('info', `stopping port ${instance.port} (PID: ${instance.pid})`);
       }
-      stopSpin?.start(`Stopping OpenChamber on port ${instance.port}...`);
+      stopSpin?.start(`Stopping Rox Space on port ${instance.port}...`);
       try {
         const requested = await requestServerShutdown(instance.port);
         const stopped = await stopInstanceProcess(instance.pid, {
@@ -3953,13 +3953,13 @@ const commands = {
         }
         removePidFile(instance.pidFilePath);
         removeInstanceFile(instance.instanceFilePath);
-        stopSpin?.stop(`Stopped OpenChamber on port ${instance.port}`);
+        stopSpin?.stop(`Stopped Rox Space on port ${instance.port}`);
         jsonResults.push({ port: instance.port, pid: instance.pid, stopped: true });
         if (showOutput && !stopSpin) {
           logStatus('success', `stopped port ${instance.port}`);
         }
       } catch (error) {
-        stopSpin?.error(`Failed to stop OpenChamber on port ${instance.port}`);
+        stopSpin?.error(`Failed to stop Rox Space on port ${instance.port}`);
         jsonResults.push({ port: instance.port, pid: instance.pid, stopped: false, reason: error instanceof Error ? error.message : String(error) });
         if (showOutput) {
           logStatus('error', `error stopping port ${instance.port}`, error.message);
@@ -3989,7 +3989,7 @@ const commands = {
     const restarted = [];
 
     if (showOutput) {
-      clackIntro('OpenChamber Restart');
+      clackIntro('Rox Space Restart');
     }
 
     let runningInstances = await discoverRunningInstances();
@@ -3998,7 +3998,7 @@ const commands = {
         printJson({ restartedCount: 0, results: restarted });
       }
       if (showOutput) {
-        logStatus('info', 'No running OpenChamber instances to restart');
+        logStatus('info', 'No running Rox Space instances to restart');
         clackOutro('nothing to restart');
       } else if (isQuietMode(options)) {
         process.stdout.write('restarted 0\n');
@@ -4013,7 +4013,7 @@ const commands = {
           printJson({ restartedCount: 0, results: restarted });
         }
         if (showOutput) {
-          logStatus('warning', `no OpenChamber instance found on port ${options.port}`);
+          logStatus('warning', `no Rox Space instance found on port ${options.port}`);
           clackOutro('nothing to restart');
         } else if (isQuietMode(options)) {
           process.stdout.write('restarted 0\n');
@@ -4033,7 +4033,7 @@ const commands = {
       if (showOutput && !restartSpin) {
         logStatus('info', `restarting port ${instance.port}`, `mode: ${launchMode}`);
       }
-      restartSpin?.start(`Restarting OpenChamber on port ${instance.port}...`);
+      restartSpin?.start(`Restarting Rox Space on port ${instance.port}...`);
       try {
         await this.stop({
           explicitPort: true,
@@ -4069,13 +4069,13 @@ const commands = {
           suppressQuietOutput: true,
         });
         restarted.push({ fromPort: instance.port, toPort: restartedPort, launchMode, ok: true });
-        restartSpin?.stop(`Restarted OpenChamber on port ${restartedPort}`);
+        restartSpin?.stop(`Restarted Rox Space on port ${restartedPort}`);
         if (showOutput && !restartSpin) {
           logStatus('success', `port ${restartedPort} restarted`, `mode: ${launchMode}`);
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        restartSpin?.error(`Failed to restart OpenChamber on port ${instance.port}`);
+        restartSpin?.error(`Failed to restart Rox Space on port ${instance.port}`);
         if (showOutput && !restartSpin) {
           logStatus('error', `failed to restart port ${instance.port}`, message);
         }
@@ -4157,7 +4157,7 @@ const commands = {
       return;
     }
 
-    clackIntro('OpenChamber Status');
+    clackIntro('Rox Space Status');
 
     if (runningCount === 0) {
       logStatus('warning', 'stopped');
@@ -4635,7 +4635,7 @@ const commands = {
                 key: 'managed-remote-port',
                 code: '[PORT_MISMATCH]',
                 lines: [
-                  'Cloudflare target must match the active OpenChamber CLI port.',
+                  'Cloudflare target must match the active Rox Space CLI port.',
                   'Example: `http://127.0.0.1:<port>`',
                   'If CLI picked a different port, update Cloudflare or run `openchamber serve --port <port>`.',
                 ],
@@ -4990,7 +4990,7 @@ const commands = {
             const safeInstances = runningInstances.filter((entry) => !isUnsafeBrowserPort(entry.port));
             if (safeInstances.length === 0) {
               throw new TunnelCliError(
-                'All discovered OpenChamber instance ports are browser-unsafe. Start or target a safe port (3000, 5173, 8080, or high ephemeral).',
+                'All discovered Rox Space instance ports are browser-unsafe. Start or target a safe port (3000, 5173, 8080, or high ephemeral).',
                 EXIT_CODE.USAGE_ERROR,
               );
             }
@@ -5007,13 +5007,13 @@ const commands = {
 
             if (attachableSafeInstances.length === 0) {
               throw new TunnelCliError(
-                'No attachable OpenChamber CLI instances found on safe ports. Start one with `openchamber serve --port 3000`.',
+                'No attachable Rox Space CLI instances found on safe ports. Start one with `openchamber serve --port 3000`.',
                 EXIT_CODE.USAGE_ERROR,
               );
             }
 
             const selectedPort = await clackSelect({
-              message: 'Select OpenChamber instance port',
+              message: 'Select Rox Space instance port',
               options: attachableSafeInstances.map((entry) => ({
                 value: entry.port,
                 label: `port ${entry.port}`,
@@ -5048,7 +5048,7 @@ const commands = {
 
         if (instance?.autoStarted) {
           const healthProgress = await createProgress(options, { max: 60 });
-          healthProgress?.start(`Waiting for OpenChamber on port ${instance.port} to become healthy (up to 60s)...`);
+          healthProgress?.start(`Waiting for Rox Space on port ${instance.port} to become healthy (up to 60s)...`);
           let progressedSeconds = 0;
           const healthy = await waitForServerHealth(instance.port, {
             timeoutMs: 60000,
@@ -5060,7 +5060,7 @@ const commands = {
               if (delta > 0) {
                 healthProgress.advance(delta);
                 progressedSeconds = elapsedSeconds;
-                healthProgress.message(`Waiting for OpenChamber health (${progressedSeconds}s / 60s)...`);
+                healthProgress.message(`Waiting for Rox Space health (${progressedSeconds}s / 60s)...`);
               }
               if (complete && progressedSeconds < 60) {
                 const remaining = 60 - progressedSeconds;
@@ -5072,9 +5072,9 @@ const commands = {
             },
           });
           if (!healthy) {
-            healthProgress?.stop('OpenChamber is still starting');
+            healthProgress?.stop('Rox Space is still starting');
             throw new Error(
-              `OpenChamber on port ${instance.port} is still starting after 60s. Startup time can vary by machine performance. ` +
+              `Rox Space on port ${instance.port} is still starting after 60s. Startup time can vary by machine performance. ` +
               `Wait another minute, then check health with \`curl -fsS ${buildLocalUrl(instance.port, '/health')}\`. ` +
               `If health is OK, retry tunnel start with \`openchamber tunnel start --port ${instance.port}\`. ` +
               `For diagnostics run \`openchamber logs -p ${instance.port}\`.`
@@ -5317,18 +5317,18 @@ const commands = {
     if (options.all) {
       targets = running;
       if (targets.length === 0) {
-        throw new Error('No running OpenChamber instance found.');
+        throw new Error('No running Rox Space instance found.');
       }
     } else if (options.explicitPort) {
       const found = running.find((entry) => entry.port === options.port);
       if (!found) {
-        throw new Error(`No running OpenChamber instance found on port ${options.port}.`);
+        throw new Error(`No running Rox Space instance found on port ${options.port}.`);
       }
       targets = [found];
     } else {
       const latest = getLatestInstance(running);
       if (!latest) {
-        throw new Error('No running OpenChamber instance found.');
+        throw new Error('No running Rox Space instance found.');
       }
       targets = [latest];
       if (shouldRenderHumanOutput(options)) {
@@ -5353,7 +5353,7 @@ const commands = {
     }
 
     if (showFrames) {
-      clackIntro('OpenChamber Logs');
+      clackIntro('Rox Space Logs');
     }
 
     for (const target of targets) {
@@ -5446,7 +5446,7 @@ const commands = {
       return;
     }
 
-    clackIntro('OpenChamber Startup');
+    clackIntro('Rox Space Startup');
     logStatus(result.enabled ? 'success' : 'info', `startup ${result.enabled ? 'enabled' : 'disabled'}`, result.servicePath || undefined);
     if (typeof result.activeState === 'string') {
       logStatus(result.active ? 'success' : result.activeState === 'failed' ? 'error' : 'warning', `service ${result.activeState}`);
@@ -5473,7 +5473,7 @@ const commands = {
     const currentVersion = getCurrentVersion();
 
     if (showOutput) {
-      clackIntro('OpenChamber Update');
+      clackIntro('Rox Space Update');
     }
 
     if (showOutput && !updateSpin) {

@@ -1378,7 +1378,7 @@ const getNotificationClaimKey = (payload: { title?: unknown; body?: unknown; ses
     .join('|');
 };
 
-const claimOpenChamberNotification = async (payload: { title?: unknown; body?: unknown; sessionId?: unknown; tag?: unknown } | undefined): Promise<boolean> => {
+const claimRoxSpaceNotification = async (payload: { title?: unknown; body?: unknown; sessionId?: unknown; tag?: unknown } | undefined): Promise<boolean> => {
   const key = getNotificationClaimKey(payload);
   if (!key) return true;
   try {
@@ -1389,7 +1389,7 @@ const claimOpenChamberNotification = async (payload: { title?: unknown; body?: u
   }
 };
 
-const showOpenChamberNotification = (payload: { title?: unknown; body?: unknown; sessionId?: unknown; tag?: unknown; requireHidden?: unknown } | undefined) => {
+const showRoxSpaceNotification = (payload: { title?: unknown; body?: unknown; sessionId?: unknown; tag?: unknown; requireHidden?: unknown } | undefined) => {
   if (typeof Notification === 'undefined') {
     return false;
   }
@@ -1410,7 +1410,7 @@ const showOpenChamberNotification = (payload: { title?: unknown; body?: unknown;
     const sessionId = typeof payload?.sessionId === 'string' && payload.sessionId.trim().length > 0
       ? payload.sessionId.trim()
       : '';
-    if (!await claimOpenChamberNotification({ ...payload, title, body, sessionId })) {
+    if (!await claimRoxSpaceNotification({ ...payload, title, body, sessionId })) {
       return false;
     }
 
@@ -1440,7 +1440,7 @@ const showOpenChamberNotification = (payload: { title?: unknown; body?: unknown;
 };
 
 onCommand('showNotification', (payload) => {
-  showOpenChamberNotification(payload as { title?: unknown; body?: unknown; sessionId?: unknown; requireHidden?: unknown } | undefined);
+  showRoxSpaceNotification(payload as { title?: unknown; body?: unknown; sessionId?: unknown; requireHidden?: unknown } | undefined);
 });
 
 onCommand('windowFocusChanged', (payload) => {
@@ -1670,7 +1670,7 @@ window.addEventListener('openchamber:vscode-notification-event', (event) => {
         const template = getNotificationTemplate(settings, 'completion', { title: '{agent_name} is ready', message: '{model_name} completed the task' });
         const title = resolveTemplate(template.title, variables) || 'Agent is ready';
         const body = resolveTemplate(template.message, variables);
-        showOpenChamberNotification({
+        showRoxSpaceNotification({
           title,
           body: shouldApplyTemplateMessage(template.message, body, variables) ? body : `${variables.model_name} completed the task`,
           sessionId,
@@ -1684,7 +1684,7 @@ window.addEventListener('openchamber:vscode-notification-event', (event) => {
         const template = getNotificationTemplate(settings, 'error', { title: 'Tool error', message: '{last_message}' });
         const title = resolveTemplate(template.title, variables) || 'Tool error';
         const body = resolveTemplate(template.message, variables);
-        showOpenChamberNotification({
+        showRoxSpaceNotification({
           title,
           body: shouldApplyTemplateMessage(template.message, body, variables) ? body : 'An error occurred',
           sessionId,
@@ -1703,7 +1703,7 @@ window.addEventListener('openchamber:vscode-notification-event', (event) => {
       const template = getNotificationTemplate(settings, 'question', { title: 'Input needed', message: '{last_message}' });
       const title = resolveTemplate(template.title, questionVariables) || (/plan\s*mode/i.test(header) ? 'Switch to plan mode' : /build\s*agent/i.test(header) ? 'Switch to build mode' : header || 'Input needed');
       const body = resolveTemplate(template.message, questionVariables);
-      showOpenChamberNotification({
+      showRoxSpaceNotification({
         title,
         body: shouldApplyTemplateMessage(template.message, body, questionVariables) ? body : questionText || 'Agent is waiting for your response',
         sessionId,
@@ -1722,7 +1722,7 @@ window.addEventListener('openchamber:vscode-notification-event', (event) => {
       const template = getNotificationTemplate(settings, 'question', { title: 'Permission required', message: '{last_message}' });
       const title = resolveTemplate(template.title, permissionVariables) || 'Permission required';
       const body = resolveTemplate(template.message, permissionVariables);
-      showOpenChamberNotification({
+      showRoxSpaceNotification({
         title,
         body: shouldApplyTemplateMessage(template.message, body, permissionVariables) ? body : fallbackMessage,
         sessionId,

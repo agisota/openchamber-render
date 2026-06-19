@@ -1,8 +1,8 @@
-# OpenChamber - AI Agent Reference
+# Rox Space - AI Agent Reference
 
 ## Core purpose
 
-OpenChamber provides UI runtimes (web/desktop/VS Code) for interacting with an OpenCode server (local auto-start or remote URL). Official OpenCode traffic goes through `@opencode-ai/sdk`; OpenChamber-owned runtime capabilities go through `RuntimeAPIs`, `runtimeFetch`, and browser/realtime URL helpers.
+Rox Space provides UI runtimes (web/desktop/VS Code) for interacting with an OpenCode server (local auto-start or remote URL). Official OpenCode traffic goes through `@opencode-ai/sdk`; Rox Space-owned runtime capabilities go through `RuntimeAPIs`, `runtimeFetch`, and browser/realtime URL helpers.
 
 ## Runtime architecture (IMPORTANT)
 
@@ -43,7 +43,7 @@ Before changing any mapped module, read its module documentation first.
 
 ### web
 
-Web runtime and server implementation for OpenChamber.
+Web runtime and server implementation for Rox Space.
 
 #### lib
 
@@ -51,7 +51,7 @@ Server-side integration modules used by API routes and runtime services.
 
 ##### event-stream
 
-OpenChamber-owned event stream helpers for server-sent runtime events.
+Rox Space-owned event stream helpers for server-sent runtime events.
 
 - Module docs: `packages/web/server/lib/event-stream/DOCUMENTATION.md`
 
@@ -117,7 +117,7 @@ Server-side text-to-speech services and summarization helpers for `/api/tts/*` e
 
 ##### tunnels
 
-Tunnel provider setup and runtime helpers for exposing OpenChamber over remote URLs.
+Tunnel provider setup and runtime helpers for exposing Rox Space over remote URLs.
 
 - Module docs: `packages/web/server/lib/tunnels/DOCUMENTATION.md`
 

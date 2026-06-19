@@ -167,7 +167,7 @@ export const dict: Record<I18nKey, string> = {
   'sessions.sidebar.header.search.clear': 'Wyczyść wyszukiwanie',
   'sessions.sidebar.footer.actions.settings': 'Ustawienia',
   'sessions.sidebar.footer.actions.shortcuts': 'Skróty',
-  'sessions.sidebar.footer.actions.aboutOpenChamber': 'O Rox Space',
+  'sessions.sidebar.footer.actions.aboutRoxSpace': 'O Rox Space',
   'sessions.sidebar.footer.actions.update': 'Aktualizuj',
   'sessions.sidebar.empty.noSessions.title': 'Brak sesji',
   'sessions.sidebar.empty.noSessions.description': 'Utwórz swoją pierwszą sesję, aby rozpocząć kodowanie.',

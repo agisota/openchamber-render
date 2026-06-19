@@ -59,7 +59,7 @@ export const createFeatureRoutesRuntime = (dependencies) => {
       buildAugmentedPath,
       projectConfigRuntime,
       scheduledTasksRuntime,
-      getOpenChamberEventClients,
+      getRoxSpaceEventClients,
       writeSseEvent,
     } = routeDependencies;
 
@@ -107,7 +107,7 @@ export const createFeatureRoutesRuntime = (dependencies) => {
       sanitizeProjects,
       projectConfigRuntime,
       scheduledTasksRuntime,
-      getOpenChamberEventClients,
+      getRoxSpaceEventClients,
       writeSseEvent,
     });
 

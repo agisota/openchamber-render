@@ -28,10 +28,10 @@ import {
   readProjectPlanFile,
   OPENCHAMBER_PROJECT_TODO_TEXT_MAX_LENGTH,
   saveProjectNotesAndTodos,
-  type OpenChamberProjectPlanFileLink,
-  type OpenChamberProjectTodoItem,
+  type RoxSpaceProjectPlanFileLink,
+  type RoxSpaceProjectTodoItem,
   type ProjectRef,
-} from '@/lib/openchamberConfig';
+} from '@/lib/roxSpaceConfig';
 import { requestFileAccess } from '@/lib/desktop';
 import { generateBranchName } from '@/lib/git/branchNameGenerator';
 import { useDirectoryStore } from '@/stores/useDirectoryStore';
@@ -87,12 +87,12 @@ type PendingSendTarget = {
   todoText: string;
 };
 
-type ProjectPlanListItem = OpenChamberProjectPlanFileLink & {
+type ProjectPlanListItem = RoxSpaceProjectPlanFileLink & {
   title: string;
 };
 
 const toPlanListItem = async (
-  plan: OpenChamberProjectPlanFileLink,
+  plan: RoxSpaceProjectPlanFileLink,
   fallbackTitle: string,
 ): Promise<ProjectPlanListItem> => {
   const file = await readProjectPlanFile(plan.path);
@@ -109,12 +109,12 @@ const createTodoId = (): string => {
   return `todo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 };
 
-const sortTodosWithCompletedLast = (items: OpenChamberProjectTodoItem[]): OpenChamberProjectTodoItem[] => [
+const sortTodosWithCompletedLast = (items: RoxSpaceProjectTodoItem[]): RoxSpaceProjectTodoItem[] => [
   ...items.filter((todo) => !todo.completed),
   ...items.filter((todo) => todo.completed),
 ];
 
-const insertTodoBeforeCompleted = (items: OpenChamberProjectTodoItem[], item: OpenChamberProjectTodoItem): OpenChamberProjectTodoItem[] => {
+const insertTodoBeforeCompleted = (items: RoxSpaceProjectTodoItem[], item: RoxSpaceProjectTodoItem): RoxSpaceProjectTodoItem[] => {
   const firstCompletedIndex = items.findIndex((todo) => todo.completed);
   if (firstCompletedIndex === -1) {
     return [...items, item];
@@ -167,7 +167,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
   const { t } = useI18n();
   const [isLoading, setIsLoading] = React.useState(false);
   const [notes, setNotes] = React.useState('');
-  const [todos, setTodos] = React.useState<OpenChamberProjectTodoItem[]>([]);
+  const [todos, setTodos] = React.useState<RoxSpaceProjectTodoItem[]>([]);
   const [newTodoText, setNewTodoText] = React.useState('');
   const [sendingTodoId, setSendingTodoId] = React.useState<string | null>(null);
   const [expandedTodoIds, setExpandedTodoIds] = React.useState<Set<string>>(() => new Set());
@@ -188,7 +188,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
 
   const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
   const createSession = useSessionUIStore((state) => state.createSession);
-  const initializeNewOpenChamberSession = useSessionUIStore((state) => state.initializeNewOpenChamberSession);
+  const initializeNewRoxSpaceSession = useSessionUIStore((state) => state.initializeNewRoxSpaceSession);
   const sendMessage = useSessionUIStore((state) => state.sendMessage);
   const setCurrentSession = useSessionUIStore((state) => state.setCurrentSession);
   const setPendingInputText = useInputStore((state) => state.setPendingInputText);
@@ -199,7 +199,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
   const padding = useUIStore((state) => state.padding);
 
   const persistProjectData = React.useCallback(
-    async (nextNotes: string, nextTodos: OpenChamberProjectTodoItem[]) => {
+    async (nextNotes: string, nextTodos: RoxSpaceProjectTodoItem[]) => {
       if (!projectRef) {
         return false;
       }
@@ -560,7 +560,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
           }
           sessionId = session.id;
           directoryHint = session.directory ?? projectRef.path;
-          initializeNewOpenChamberSession(session.id, useConfigStore.getState().agents ?? []);
+          initializeNewRoxSpaceSession(session.id, useConfigStore.getState().agents ?? []);
         }
 
         if (!sessionId) {
@@ -608,7 +608,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         setSendingTodoId(null);
       }
     },
-    [canCreateWorktree, createSession, initializeNewOpenChamberSession, onActionComplete, pendingSendTarget, projectRef, routeToChat, sendMessage, setCurrentSession, t]
+    [canCreateWorktree, createSession, initializeNewRoxSpaceSession, onActionComplete, pendingSendTarget, projectRef, routeToChat, sendMessage, setCurrentSession, t]
   );
 
   const planFileInputRef = React.useRef<HTMLInputElement | null>(null);

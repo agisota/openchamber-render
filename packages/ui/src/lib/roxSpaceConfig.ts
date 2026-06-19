@@ -1,5 +1,5 @@
 /**
- * OpenChamber project-level configuration service.
+ * RoxSpace project-level configuration service.
  * Stores per-project settings in ~/.config/openchamber/<projectId>.json.
  * Migrates from legacy <project>/.openchamber/openchamber.json.
  */
@@ -30,62 +30,62 @@ function getRuntimeFilesAPI(): FilesAPI | null {
   return null;
 }
 
-export interface OpenChamberConfig {
+export interface RoxSpaceConfig {
   projectPath?: string;
   'setup-worktree'?: string[];
   projectNotes?: string;
-  projectTodos?: OpenChamberProjectTodoItem[];
-  projectPlanFiles?: OpenChamberProjectPlanFileLink[];
-  projectActions?: OpenChamberProjectAction[];
+  projectTodos?: RoxSpaceProjectTodoItem[];
+  projectPlanFiles?: RoxSpaceProjectPlanFileLink[];
+  projectActions?: RoxSpaceProjectAction[];
   projectActionsPrimaryId?: string;
   draftStarters?: DraftStarterRef[];
 }
 
-export type OpenChamberProjectActionPlatform = 'macos' | 'linux' | 'windows';
+export type RoxSpaceProjectActionPlatform = 'macos' | 'linux' | 'windows';
 
-export interface OpenChamberProjectAction {
+export interface RoxSpaceProjectAction {
   id: string;
   name: string;
   command: string;
   icon?: string | null;
-  platforms?: OpenChamberProjectActionPlatform[];
+  platforms?: RoxSpaceProjectActionPlatform[];
   autoOpenUrl?: boolean;
   openUrl?: string;
   desktopOpenSshForward?: string;
 }
 
-export interface OpenChamberProjectActionsState {
-  actions: OpenChamberProjectAction[];
+export interface RoxSpaceProjectActionsState {
+  actions: RoxSpaceProjectAction[];
   primaryActionId: string | null;
 }
 
-export interface OpenChamberProjectTodoItem {
+export interface RoxSpaceProjectTodoItem {
   id: string;
   text: string;
   completed: boolean;
   createdAt: number;
 }
 
-export interface OpenChamberProjectPlanFileLink {
+export interface RoxSpaceProjectPlanFileLink {
   id: string;
   path: string;
   createdAt: number;
 }
 
-export interface OpenChamberProjectPlanFile {
+export interface RoxSpaceProjectPlanFile {
   title: string;
   body: string;
   raw: string;
   path: string;
 }
 
-export interface OpenChamberProjectNotesTodos {
+export interface RoxSpaceProjectNotesTodos {
   notes: string;
-  todos: OpenChamberProjectTodoItem[];
+  todos: RoxSpaceProjectTodoItem[];
 }
 
-export interface OpenChamberProjectContextData extends OpenChamberProjectNotesTodos {
-  plans: OpenChamberProjectPlanFileLink[];
+export interface RoxSpaceProjectContextData extends RoxSpaceProjectNotesTodos {
+  plans: RoxSpaceProjectPlanFileLink[];
 }
 
 export const OPENCHAMBER_PROJECT_NOTES_MAX_LENGTH = 3000;
@@ -96,7 +96,7 @@ export const OPENCHAMBER_PROJECT_ACTION_OPEN_URL_MAX_LENGTH = 2000;
 export const OPENCHAMBER_PROJECT_ACTION_DESKTOP_FORWARD_MAX_LENGTH = 300;
 export const OPENCHAMBER_PROJECT_PLAN_TITLE_MAX_LENGTH = 160;
 
-const OPENCHAMBER_ACTION_PLATFORM_SET = new Set<OpenChamberProjectActionPlatform>(['macos', 'linux', 'windows']);
+const OPENCHAMBER_ACTION_PLATFORM_SET = new Set<RoxSpaceProjectActionPlatform>(['macos', 'linux', 'windows']);
 
 const normalize = (value: string): string => {
   if (!value) return '';
@@ -277,12 +277,12 @@ const sanitizeProjectNotes = (value: unknown): string => {
   return trimToMaxLength(value, OPENCHAMBER_PROJECT_NOTES_MAX_LENGTH);
 };
 
-const sanitizeProjectTodoItems = (value: unknown): OpenChamberProjectTodoItem[] => {
+const sanitizeProjectTodoItems = (value: unknown): RoxSpaceProjectTodoItem[] => {
   if (!Array.isArray(value)) {
     return [];
   }
 
-  const sanitized: OpenChamberProjectTodoItem[] = [];
+  const sanitized: RoxSpaceProjectTodoItem[] = [];
   for (const entry of value) {
     if (!entry || typeof entry !== 'object') {
       continue;
@@ -320,12 +320,12 @@ const sanitizeProjectTodoItems = (value: unknown): OpenChamberProjectTodoItem[] 
   return sanitized;
 };
 
-const sanitizeProjectPlanFileLinks = (value: unknown): OpenChamberProjectPlanFileLink[] => {
+const sanitizeProjectPlanFileLinks = (value: unknown): RoxSpaceProjectPlanFileLink[] => {
   if (!Array.isArray(value)) {
     return [];
   }
 
-  const sanitized: OpenChamberProjectPlanFileLink[] = [];
+  const sanitized: RoxSpaceProjectPlanFileLink[] = [];
   const seenIds = new Set<string>();
 
   for (const entry of value) {
@@ -357,18 +357,18 @@ const sanitizeProjectPlanFileLinks = (value: unknown): OpenChamberProjectPlanFil
   return sanitized.sort((a, b) => b.createdAt - a.createdAt);
 };
 
-const sanitizeProjectActionPlatforms = (value: unknown): OpenChamberProjectActionPlatform[] => {
+const sanitizeProjectActionPlatforms = (value: unknown): RoxSpaceProjectActionPlatform[] => {
   if (!Array.isArray(value)) {
     return [];
   }
 
-  const unique: OpenChamberProjectActionPlatform[] = [];
-  const seen = new Set<OpenChamberProjectActionPlatform>();
+  const unique: RoxSpaceProjectActionPlatform[] = [];
+  const seen = new Set<RoxSpaceProjectActionPlatform>();
   for (const entry of value) {
     if (typeof entry !== 'string') {
       continue;
     }
-    const normalized = entry.trim().toLowerCase() as OpenChamberProjectActionPlatform;
+    const normalized = entry.trim().toLowerCase() as RoxSpaceProjectActionPlatform;
     if (!OPENCHAMBER_ACTION_PLATFORM_SET.has(normalized) || seen.has(normalized)) {
       continue;
     }
@@ -379,12 +379,12 @@ const sanitizeProjectActionPlatforms = (value: unknown): OpenChamberProjectActio
   return unique;
 };
 
-const sanitizeProjectActions = (value: unknown): OpenChamberProjectAction[] => {
+const sanitizeProjectActions = (value: unknown): RoxSpaceProjectAction[] => {
   if (!Array.isArray(value)) {
     return [];
   }
 
-  const sanitized: OpenChamberProjectAction[] = [];
+  const sanitized: RoxSpaceProjectAction[] = [];
   const seenIds = new Set<string>();
 
   for (const entry of value) {
@@ -443,7 +443,7 @@ const sanitizeProjectActions = (value: unknown): OpenChamberProjectAction[] => {
 const sanitizeProjectActionsState = (value: {
   actions?: unknown;
   primaryActionId?: unknown;
-} | null | undefined): OpenChamberProjectActionsState => {
+} | null | undefined): RoxSpaceProjectActionsState => {
   const actions = sanitizeProjectActions(value?.actions);
   const primaryRaw = typeof value?.primaryActionId === 'string' ? value.primaryActionId.trim() : '';
   const primaryActionId = primaryRaw && actions.some((entry) => entry.id === primaryRaw)
@@ -459,7 +459,7 @@ const sanitizeProjectActionsState = (value: {
 const sanitizeProjectNotesAndTodos = (value: {
   notes?: unknown;
   todos?: unknown;
-} | null | undefined): OpenChamberProjectNotesTodos => {
+} | null | undefined): RoxSpaceProjectNotesTodos => {
   return {
     notes: sanitizeProjectNotes(value?.notes),
     todos: sanitizeProjectTodoItems(value?.todos),
@@ -470,7 +470,7 @@ const sanitizeProjectContextData = (value: {
   notes?: unknown;
   todos?: unknown;
   plans?: unknown;
-} | null | undefined): OpenChamberProjectContextData => {
+} | null | undefined): RoxSpaceProjectContextData => {
   const notesAndTodos = sanitizeProjectNotesAndTodos(value);
   return {
     ...notesAndTodos,
@@ -551,7 +551,7 @@ export const parseProjectPlanMarkdown = (raw: string): { title: string; body: st
  * Read the config for a project.
  * Returns null if file doesn't exist or is invalid.
  */
-export async function readOpenChamberConfig(project: ProjectRef): Promise<OpenChamberConfig | null> {
+export async function readRoxSpaceConfig(project: ProjectRef): Promise<RoxSpaceConfig | null> {
   const projectDirectory = typeof project?.path === 'string' ? project.path.trim() : '';
   if (!projectDirectory) {
     return null;
@@ -568,7 +568,7 @@ export async function readOpenChamberConfig(project: ProjectRef): Promise<OpenCh
     return text;
   };
 
-  const parseConfig = (text: string | null): OpenChamberConfig | null => {
+  const parseConfig = (text: string | null): RoxSpaceConfig | null => {
     if (typeof text !== 'string') {
       return null;
     }
@@ -581,7 +581,7 @@ export async function readOpenChamberConfig(project: ProjectRef): Promise<OpenCh
       if (!parsed || typeof parsed !== 'object') {
         return null;
       }
-      return parsed as OpenChamberConfig;
+      return parsed as RoxSpaceConfig;
     } catch {
       return null;
     }
@@ -605,9 +605,9 @@ export async function readOpenChamberConfig(project: ProjectRef): Promise<OpenCh
 
   // Best-effort write + delete legacy.
   try {
-    const wrote = await writeOpenChamberConfig(project, legacyConfig);
+    const wrote = await writeRoxSpaceConfig(project, legacyConfig);
     if (wrote) {
-      await deleteLegacyOpenChamberConfig(projectDirectory);
+      await deleteLegacyRoxSpaceConfig(projectDirectory);
     }
   } catch {
     // Ignore migration failures; still return legacy content.
@@ -623,9 +623,9 @@ export async function readOpenChamberConfig(project: ProjectRef): Promise<OpenCh
  * dedicated route and never round-trips them through this config write path to
  * avoid a read-then-write race clobbering a concurrent server update.
  */
-export async function writeOpenChamberConfig(
+export async function writeRoxSpaceConfig(
   project: ProjectRef,
-  config: OpenChamberConfig
+  config: RoxSpaceConfig
 ): Promise<boolean> {
   const projectDirectory = typeof project?.path === 'string' ? project.path.trim() : '';
   if (!projectDirectory) {
@@ -677,42 +677,42 @@ export async function writeOpenChamberConfig(
 /**
  * Update specific keys in the config, preserving other values.
  */
-export async function updateOpenChamberConfig(
+export async function updateRoxSpaceConfig(
   project: ProjectRef,
-  updates: Partial<OpenChamberConfig>
+  updates: Partial<RoxSpaceConfig>
 ): Promise<boolean> {
-  const existing = await readOpenChamberConfig(project) || {};
+  const existing = await readRoxSpaceConfig(project) || {};
   const merged = { ...existing, ...updates };
-  return writeOpenChamberConfig(project, merged);
+  return writeRoxSpaceConfig(project, merged);
 }
 
 /**
  * Get worktree setup commands from config.
  */
 export async function getWorktreeSetupCommands(project: ProjectRef): Promise<string[]> {
-  const config = await readOpenChamberConfig(project);
+  const config = await readRoxSpaceConfig(project);
   return config?.['setup-worktree'] ?? [];
 }
 
 export async function saveWorktreeSetupCommands(project: ProjectRef, commands: string[]): Promise<boolean> {
   const filtered = commands.filter((cmd) => cmd.trim().length > 0);
-  return updateOpenChamberConfig(project, { 'setup-worktree': filtered });
+  return updateRoxSpaceConfig(project, { 'setup-worktree': filtered });
 }
 
 /**
  * Get this project's pinned draft welcome starters.
  */
 export async function getProjectDraftStarters(project: ProjectRef): Promise<DraftStarterRef[]> {
-  const config = await readOpenChamberConfig(project);
+  const config = await readRoxSpaceConfig(project);
   return sanitizeStarterRefs(config?.draftStarters);
 }
 
 export async function saveProjectDraftStarters(project: ProjectRef, starters: DraftStarterRef[]): Promise<boolean> {
-  return updateOpenChamberConfig(project, { draftStarters: sanitizeStarterRefs(starters) });
+  return updateRoxSpaceConfig(project, { draftStarters: sanitizeStarterRefs(starters) });
 }
 
-export async function getProjectNotesAndTodos(project: ProjectRef): Promise<OpenChamberProjectNotesTodos> {
-  const config = await readOpenChamberConfig(project);
+export async function getProjectNotesAndTodos(project: ProjectRef): Promise<RoxSpaceProjectNotesTodos> {
+  const config = await readRoxSpaceConfig(project);
   return sanitizeProjectNotesAndTodos({
     notes: config?.projectNotes,
     todos: config?.projectTodos,
@@ -721,21 +721,21 @@ export async function getProjectNotesAndTodos(project: ProjectRef): Promise<Open
 
 export async function saveProjectNotesAndTodos(
   project: ProjectRef,
-  value: OpenChamberProjectNotesTodos
+  value: RoxSpaceProjectNotesTodos
 ): Promise<boolean> {
   const sanitized = sanitizeProjectNotesAndTodos({
     notes: value.notes,
     todos: value.todos,
   });
 
-  return updateOpenChamberConfig(project, {
+  return updateRoxSpaceConfig(project, {
     projectNotes: sanitized.notes,
     projectTodos: sanitized.todos,
   });
 }
 
-export async function getProjectContextData(project: ProjectRef): Promise<OpenChamberProjectContextData> {
-  const config = await readOpenChamberConfig(project);
+export async function getProjectContextData(project: ProjectRef): Promise<RoxSpaceProjectContextData> {
+  const config = await readRoxSpaceConfig(project);
   return sanitizeProjectContextData({
     notes: config?.projectNotes,
     todos: config?.projectTodos,
@@ -743,22 +743,22 @@ export async function getProjectContextData(project: ProjectRef): Promise<OpenCh
   });
 }
 
-export async function getProjectPlanFiles(project: ProjectRef): Promise<OpenChamberProjectPlanFileLink[]> {
-  const config = await readOpenChamberConfig(project);
+export async function getProjectPlanFiles(project: ProjectRef): Promise<RoxSpaceProjectPlanFileLink[]> {
+  const config = await readRoxSpaceConfig(project);
   return sanitizeProjectPlanFileLinks(config?.projectPlanFiles);
 }
 
 export async function saveProjectPlanFiles(
   project: ProjectRef,
-  value: OpenChamberProjectPlanFileLink[]
+  value: RoxSpaceProjectPlanFileLink[]
 ): Promise<boolean> {
   const sanitized = sanitizeProjectPlanFileLinks(value);
-  return updateOpenChamberConfig(project, {
+  return updateRoxSpaceConfig(project, {
     projectPlanFiles: sanitized,
   });
 }
 
-export async function readProjectPlanFile(path: string): Promise<OpenChamberProjectPlanFile | null> {
+export async function readProjectPlanFile(path: string): Promise<RoxSpaceProjectPlanFile | null> {
   const trimmedPath = typeof path === 'string' ? path.trim() : '';
   if (!trimmedPath) {
     return null;
@@ -825,7 +825,7 @@ export async function importProjectPlanFileFromContent(
   project: ProjectRef,
   content: string,
   fallbackTitle?: string
-): Promise<OpenChamberProjectPlanFileLink | null> {
+): Promise<RoxSpaceProjectPlanFileLink | null> {
   const raw = typeof content === 'string' ? content : '';
   if (!raw.trim()) {
     return null;
@@ -839,7 +839,7 @@ export async function importProjectPlanFileFromContent(
 export async function createProjectPlanFile(
   project: ProjectRef,
   value: { title: string; body: string }
-): Promise<OpenChamberProjectPlanFileLink | null> {
+): Promise<RoxSpaceProjectPlanFileLink | null> {
   const plansDirectory = await getProjectPlansDirectory(project);
   if (!plansDirectory) {
     return null;
@@ -876,8 +876,8 @@ export async function createProjectPlanFile(
   return nextEntry;
 }
 
-export async function getProjectActionsState(project: ProjectRef): Promise<OpenChamberProjectActionsState> {
-  const config = await readOpenChamberConfig(project);
+export async function getProjectActionsState(project: ProjectRef): Promise<RoxSpaceProjectActionsState> {
+  const config = await readRoxSpaceConfig(project);
   return sanitizeProjectActionsState({
     actions: config?.projectActions,
     primaryActionId: config?.projectActionsPrimaryId,
@@ -886,14 +886,14 @@ export async function getProjectActionsState(project: ProjectRef): Promise<OpenC
 
 export async function saveProjectActionsState(
   project: ProjectRef,
-  value: OpenChamberProjectActionsState
+  value: RoxSpaceProjectActionsState
 ): Promise<boolean> {
   const sanitized = sanitizeProjectActionsState({
     actions: value.actions,
     primaryActionId: value.primaryActionId,
   });
 
-  return updateOpenChamberConfig(project, {
+  return updateRoxSpaceConfig(project, {
     projectActions: sanitized.actions,
     projectActionsPrimaryId: sanitized.primaryActionId ?? undefined,
   });
@@ -918,7 +918,7 @@ export function substituteCommandVariables(
     .replace(/\$\{ROOT_WORKTREE_PATH\}/g, variables.rootWorktreePath);
 }
 
-async function deleteLegacyOpenChamberConfig(projectDirectory: string): Promise<void> {
+async function deleteLegacyRoxSpaceConfig(projectDirectory: string): Promise<void> {
   const legacyPath = getLegacyConfigPath(projectDirectory);
   const runtimeFiles = getRuntimeFilesAPI();
 

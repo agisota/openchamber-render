@@ -344,7 +344,7 @@ export const dict = {
   'sessions.sidebar.header.search.clear': 'Clear search',
   'sessions.sidebar.footer.actions.settings': 'Settings',
   'sessions.sidebar.footer.actions.shortcuts': 'Shortcuts',
-  'sessions.sidebar.footer.actions.aboutOpenChamber': 'About Rox Space',
+  'sessions.sidebar.footer.actions.aboutRoxSpace': 'About Rox Space',
   'sessions.sidebar.footer.actions.update': 'Update',
   'sessions.sidebar.empty.noSessions.title': 'No sessions yet',
   'sessions.sidebar.empty.noSessions.description': 'Create your first session to start coding.',

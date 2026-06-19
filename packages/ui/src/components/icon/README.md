@@ -1,6 +1,6 @@
 # Icon System
 
-OpenChamber uses an SVG sprite-based icon system for performance. All icons are rendered via a single hidden SVG sprite injected into the DOM, referenced by `<use href="#oc-icon-name"/>`.
+RoxSpace uses an SVG sprite-based icon system for performance. All icons are rendered via a single hidden SVG sprite injected into the DOM, referenced by `<use href="#oc-icon-name"/>`.
 
 ## Usage
 

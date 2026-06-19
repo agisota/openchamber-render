@@ -10,8 +10,8 @@ export type ScheduledTaskRanEvent = {
   sessionId?: string;
 };
 
-type OpenChamberEvent = ScheduledTaskRanEvent;
-type Listener = (event: OpenChamberEvent) => void;
+type RoxSpaceEvent = ScheduledTaskRanEvent;
+type Listener = (event: RoxSpaceEvent) => void;
 
 let eventSource: EventSource | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;

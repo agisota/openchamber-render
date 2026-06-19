@@ -62,7 +62,7 @@ All notable changes to this project will be documented in this file.
 - Security: file previews and downloads now reject paths outside the allowed workspace unless access has been granted.
 - Sessions: fixed a bug where a running session would briefly flicker as idle (in the sidebar, the send/stop button, and the status row) when the app is protected by a password.
 - Desktop: you can now open developer tools from the Help menu.
-- Sessions: new draft sessions now start from the default model and agent instead of inheriting the previous session's selection, and fall back to OpenCode's own `default_agent` (and its model) when no OpenChamber default is set.
+- Sessions: new draft sessions now start from the default model and agent instead of inheriting the previous session's selection, and fall back to OpenCode's own `default_agent` (and its model) when no Rox Space default is set.
 - Startup: cached settings and session state now appear earlier while the live API finishes connecting.
 - Startup: the model and agent now appear faster on the initial draft — config loads under the project key up front (no reload when the draft opens) and the agent list is fetched once instead of per consumer.
 - VSCode: the extension opens faster with cached sessions, models, providers, and projects, then refreshes in the background.
@@ -140,7 +140,7 @@ All notable changes to this project will be documented in this file.
 - Chat/Input: queued messages no longer auto-send before the active session is ready, and thinking-variant choices are preserved for generated messages.
 - Chat/UI: markdown-rendered user messages now preserve line breaks.
 - Web/Browser: added a Browser feature for opening websites in the web app and sharing annotations with screenshots to agents.
-- Web/Remote Instances: added a headless web app mode, and remote instance switching now changes the OpenChamber API endpoint without loading the full remote UI.
+- Web/Remote Instances: added a headless web app mode, and remote instance switching now changes the Rox Space API endpoint without loading the full remote UI.
 - UI/Themes: added JetBrains Light and JetBrains Dark themes, and VS Code chat colors now map more closely to the active editor theme.
 
 ## [1.11.7] - 2026-05-27
@@ -158,7 +158,7 @@ All notable changes to this project will be documented in this file.
 
 - Settings/Plugins: added a Plugins page for managing opencode plugins, with npm update checks and user/project scopes (thanks to @Quat3rnion).
 - Tunnels: added Ngrok as a quick tunnel provider in the CLI and Desktop tunnel settings, with readiness checks (requires Ngrok cli and auth).
-- Desktop: added optional password setting in OpenChamber sessions settings for the local Desktop server.
+- Desktop: added optional password setting in Rox Space sessions settings for the local Desktop server.
 - Multi-Run: new multi-run sessions now appear in the session list immediately, and slash-command prompts are sent to the created run sessions correctly.
 - Mobile: restored the new-session action in the session sidebar header.
 
@@ -681,7 +681,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.6.4] - 2026-02-5
 
-- Desktop: switch between local and remote OpenChamber instances, plus a thinner runtime.
+- Desktop: switch between local and remote Rox Space instances, plus a thinner runtime.
 - VSCode: improved Windows PATH resolution and cold-start readiness checks to reduce "stuck loading" for sessions/models/agents.
 - Mobile: split Agent/Model controls and a quick commands button with autocomplete (Commands/Agents/Files) for easier input (thanks to @Jovines, @gsxdsm).
 - Chat: select text in messages to quickly add it to your prompt or start a new session (thanks to @gsxdsm).
@@ -933,7 +933,7 @@ All notable changes to this project will be documented in this file.
 - Build workflow now generates separate builds for Apple Silicon (arm64) and Intel (x86_64) Macs (thanks to @rothnic).
 - Improved dev server HMR by reusing a healthy OpenCode process to avoid zombie instances.
 - Added queued message mode with chips, batching, and idle auto‑send (including attachments).
-- Added queue mode toggle to OpenChamber settings (chat section) with persistence across runtimes.
+- Added queue mode toggle to Rox Space settings (chat section) with persistence across runtimes.
 - Fixed scroll position persistence for active conversation turns across session switches.
 - Refactored Agents/Commands management with ability to configure project/user scopes.
 
@@ -1103,7 +1103,7 @@ All notable changes to this project will be documented in this file.
 ## [1.1.0] - 2025-12-13
 
 - Added assistant answer fork flow.
-- Added OpenChamber VS Code extension with editor integration: file picker, click-to-open in tool parts.
+- Added Rox Space VS Code extension with editor integration: file picker, click-to-open in tool parts.
 - Improved scroll performance with force flag and RAF placeholder.
 - Added git polling backoff optimization.
 
@@ -1150,6 +1150,6 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.1] - 2025-12-07
 
-- Initial public release of OpenChamber web and desktop packages in a unified monorepo.
+- Initial public release of Rox Space web and desktop packages in a unified monorepo.
 - Added GitHub Actions release pipeline with macOS signing/notarization, npm publish, and release asset uploads.
 - Introduced OpenCode agent chat experience with section-based navigation, theming, and session persistence.

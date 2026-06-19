@@ -358,7 +358,7 @@ export const dict: Record<I18nKey, string> = {
   'sessions.sidebar.header.search.clear': '清除搜尋',
   'sessions.sidebar.footer.actions.settings': '設定',
   'sessions.sidebar.footer.actions.shortcuts': '快速鍵',
-  'sessions.sidebar.footer.actions.aboutOpenChamber': '關於 Rox Space',
+  'sessions.sidebar.footer.actions.aboutRoxSpace': '關於 Rox Space',
   'sessions.sidebar.footer.actions.update': '更新',
   'sessions.sidebar.empty.noSessions.title': '暫無會話',
   'sessions.sidebar.empty.noSessions.description': '建立你的第一個會話以開始編碼。',

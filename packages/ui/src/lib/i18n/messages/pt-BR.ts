@@ -345,7 +345,7 @@ export const dict: Record<I18nKey, string> = {
   "sessions.sidebar.header.search.clear": "Limpar pesquisa",
   "sessions.sidebar.footer.actions.settings": "Configurações",
   "sessions.sidebar.footer.actions.shortcuts": "Atalhos",
-  "sessions.sidebar.footer.actions.aboutOpenChamber": "Sobre o Rox Space",
+  "sessions.sidebar.footer.actions.aboutRoxSpace": "Sobre o Rox Space",
   "sessions.sidebar.footer.actions.update": "Atualizar",
   "sessions.sidebar.empty.noSessions.title": "Não há sessões ainda",
   "sessions.sidebar.empty.noSessions.description": "Crie sua primeira sessão para começar a programar.",

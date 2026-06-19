@@ -513,7 +513,7 @@ const PREVIEW_BRIDGE_SCRIPT = String.raw`(() => {
       }
     };
 
-    function OpenChamberPreviewWebSocket(url, protocols) {
+    function RoxSpacePreviewWebSocket(url, protocols) {
       const protocolList = Array.isArray(protocols) ? protocols : [protocols];
       const isViteSocket = protocolList.indexOf('vite-hmr') >= 0;
       const nextUrl = rewriteUrl(url, protocols);
@@ -535,10 +535,10 @@ const PREVIEW_BRIDGE_SCRIPT = String.raw`(() => {
       return socket;
     }
 
-    OpenChamberPreviewWebSocket.prototype = NativeWebSocket.prototype;
-    Object.setPrototypeOf(OpenChamberPreviewWebSocket, NativeWebSocket);
-    Object.defineProperty(OpenChamberPreviewWebSocket, 'name', { value: 'WebSocket' });
-    window.WebSocket = OpenChamberPreviewWebSocket;
+    RoxSpacePreviewWebSocket.prototype = NativeWebSocket.prototype;
+    Object.setPrototypeOf(RoxSpacePreviewWebSocket, NativeWebSocket);
+    Object.defineProperty(RoxSpacePreviewWebSocket, 'name', { value: 'WebSocket' });
+    window.WebSocket = RoxSpacePreviewWebSocket;
   };
 
   const installAppRequestProxyPatch = () => {
@@ -671,27 +671,27 @@ const PREVIEW_BRIDGE_SCRIPT = String.raw`(() => {
 
     if (typeof window.EventSource === 'function') {
       const NativeEventSource = window.EventSource;
-      function OpenChamberPreviewEventSource(url, eventSourceInitDict) {
+      function RoxSpacePreviewEventSource(url, eventSourceInitDict) {
         return new NativeEventSource(proxiedUrl(String(url)), eventSourceInitDict);
       }
-      OpenChamberPreviewEventSource.prototype = NativeEventSource.prototype;
-      Object.setPrototypeOf(OpenChamberPreviewEventSource, NativeEventSource);
-      Object.defineProperty(OpenChamberPreviewEventSource, 'name', { value: 'EventSource' });
-      window.EventSource = OpenChamberPreviewEventSource;
+      RoxSpacePreviewEventSource.prototype = NativeEventSource.prototype;
+      Object.setPrototypeOf(RoxSpacePreviewEventSource, NativeEventSource);
+      Object.defineProperty(RoxSpacePreviewEventSource, 'name', { value: 'EventSource' });
+      window.EventSource = RoxSpacePreviewEventSource;
     }
 
     if (typeof window.WebSocket === 'function') {
       const NativeWebSocket = window.WebSocket;
-      function OpenChamberPreviewAppWebSocket(url, protocols) {
+      function RoxSpacePreviewAppWebSocket(url, protocols) {
         const nextUrl = proxiedWebSocketUrl(String(url));
         return arguments.length === 1
           ? new NativeWebSocket(nextUrl)
           : new NativeWebSocket(nextUrl, protocols);
       }
-      OpenChamberPreviewAppWebSocket.prototype = NativeWebSocket.prototype;
-      Object.setPrototypeOf(OpenChamberPreviewAppWebSocket, NativeWebSocket);
-      Object.defineProperty(OpenChamberPreviewAppWebSocket, 'name', { value: 'WebSocket' });
-      window.WebSocket = OpenChamberPreviewAppWebSocket;
+      RoxSpacePreviewAppWebSocket.prototype = NativeWebSocket.prototype;
+      Object.setPrototypeOf(RoxSpacePreviewAppWebSocket, NativeWebSocket);
+      Object.defineProperty(RoxSpacePreviewAppWebSocket, 'name', { value: 'WebSocket' });
+      window.WebSocket = RoxSpacePreviewAppWebSocket;
     }
   };
 

@@ -80,7 +80,7 @@ function isValidOpenCodePassword(password: string): boolean {
   return typeof password === 'string' && password.trim().length > 0;
 }
 
-function readOpenChamberSettings(): Record<string, unknown> {
+function readRoxSpaceSettings(): Record<string, unknown> {
   const settingsPath = path.join(os.homedir(), '.config', 'openchamber', 'settings.json');
   try {
     const raw = fs.readFileSync(settingsPath, 'utf8');
@@ -233,7 +233,7 @@ function validateConfiguredOpencodeBinaryForManagedStart(): string | null {
   }
 
   try {
-    const settings = readOpenChamberSettings();
+    const settings = readRoxSpaceSettings();
     const raw = typeof settings.opencodeBinary === 'string' ? settings.opencodeBinary.trim() : '';
     if (raw) {
       candidates.push(raw);
@@ -273,9 +273,9 @@ function resolveOpencodeCliPath(): string | null {
     return configured;
   }
 
-  const sharedFromOpenChamber = (() => {
+  const sharedFromRoxSpace = (() => {
     try {
-      const settings = readOpenChamberSettings();
+      const settings = readRoxSpaceSettings();
       const candidate = settings.opencodeBinary;
       if (typeof candidate !== 'string') {
         return null;
@@ -286,8 +286,8 @@ function resolveOpencodeCliPath(): string | null {
     }
   })();
 
-  if (sharedFromOpenChamber && isExecutable(sharedFromOpenChamber) && !isMacOpenCodeAppBundlePath(sharedFromOpenChamber)) {
-    return sharedFromOpenChamber;
+  if (sharedFromRoxSpace && isExecutable(sharedFromRoxSpace) && !isMacOpenCodeAppBundlePath(sharedFromRoxSpace)) {
+    return sharedFromRoxSpace;
   }
 
   const explicit = [

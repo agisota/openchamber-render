@@ -16,7 +16,7 @@ const RIGHT_FACE_CELL_OPACITIES = [
   0.45, 0.25, 0.4, 0.2,
 ];
 
-interface OpenChamberLogoProps {
+interface RoxSpaceLogoProps {
   className?: string;
   width?: number;
   height?: number;
@@ -78,7 +78,7 @@ const generateFaceGrid = (
   return cells;
 };
 
-export const OpenChamberLogo: React.FC<OpenChamberLogoProps> = ({
+export const RoxSpaceLogo: React.FC<RoxSpaceLogoProps> = ({
   className = '',
   width = 70,
   height = 70,

@@ -73,7 +73,7 @@ type MessageStreamWsFrame = {
   scope?: "global" | "directory"
 }
 
-const normalizeOpenChamberSessionStatus = (payload: Event): Event | null => {
+const normalizeRoxSpaceSessionStatus = (payload: Event): Event | null => {
   const record = payload as unknown as {
     id?: unknown
     type?: unknown
@@ -132,9 +132,9 @@ const normalizeOpenChamberSessionStatus = (payload: Event): Event | null => {
 }
 
 const normalizeEventType = (payload: Event): Event => {
-  const normalizedOpenChamberStatus = normalizeOpenChamberSessionStatus(payload)
-  if (normalizedOpenChamberStatus) {
-    return normalizedOpenChamberStatus
+  const normalizedRoxSpaceStatus = normalizeRoxSpaceSessionStatus(payload)
+  if (normalizedRoxSpaceStatus) {
+    return normalizedRoxSpaceStatus
   }
 
   const type = (payload as { type?: unknown }).type

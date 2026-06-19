@@ -9,7 +9,7 @@ const originalComSpec = process.env.ComSpec;
 const originalPath = process.env.PATH;
 const originalSystemRoot = process.env.SystemRoot;
 const originalWslBinary = process.env.WSL_BINARY;
-const originalOpenChamberWslBinary = process.env.OPENCHAMBER_WSL_BINARY;
+const originalRoxSpaceWslBinary = process.env.OPENCHAMBER_WSL_BINARY;
 const originalPlatform = process.platform;
 const tempDirs = [];
 const itIf = (condition) => condition ? it : it.skip;
@@ -65,8 +65,8 @@ afterEach(() => {
     delete process.env.WSL_BINARY;
   }
 
-  if (typeof originalOpenChamberWslBinary === 'string') {
-    process.env.OPENCHAMBER_WSL_BINARY = originalOpenChamberWslBinary;
+  if (typeof originalRoxSpaceWslBinary === 'string') {
+    process.env.OPENCHAMBER_WSL_BINARY = originalRoxSpaceWslBinary;
   } else {
     delete process.env.OPENCHAMBER_WSL_BINARY;
   }

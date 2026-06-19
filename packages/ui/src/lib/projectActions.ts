@@ -1,7 +1,7 @@
 import type {
-  OpenChamberProjectAction,
-  OpenChamberProjectActionPlatform,
-} from '@/lib/openchamberConfig';
+  RoxSpaceProjectAction,
+  RoxSpaceProjectActionPlatform,
+} from '@/lib/roxSpaceConfig';
 import type {
   DesktopSshInstance,
   DesktopSshPortForward,
@@ -70,7 +70,7 @@ export const normalizeProjectActionDirectory = (value: string): string => {
   return trimmed.length > 1 ? trimmed.replace(/\/+$/, '') : trimmed;
 };
 
-export const getCurrentProjectActionPlatform = (): OpenChamberProjectActionPlatform => {
+export const getCurrentProjectActionPlatform = (): RoxSpaceProjectActionPlatform => {
   if (typeof navigator === 'undefined') {
     return 'macos';
   }
@@ -85,8 +85,8 @@ export const getCurrentProjectActionPlatform = (): OpenChamberProjectActionPlatf
 };
 
 export const isProjectActionEnabledOnPlatform = (
-  action: OpenChamberProjectAction,
-  platform: OpenChamberProjectActionPlatform
+  action: RoxSpaceProjectAction,
+  platform: RoxSpaceProjectActionPlatform
 ): boolean => {
   if (!Array.isArray(action.platforms) || action.platforms.length === 0) {
     return true;

@@ -6,7 +6,7 @@ import { useDeviceInfo } from '@/lib/device';
 import { toast } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { Icon } from "@/components/icon/Icon";
-import { OpenChamberLogo } from '@/components/ui/OpenChamberLogo';
+import { RoxSpaceLogo } from '@/components/ui/RoxSpaceLogo';
 import { useI18n } from '@/lib/i18n';
 import { runtimeFetch } from '@/lib/runtime-fetch';
 
@@ -23,7 +23,7 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
   const { t } = useI18n();
   const [updateDialogOpen, setUpdateDialogOpen] = React.useState(initialUpdateDialogOpen);
   const [showChecking, setShowChecking] = React.useState(false);
-  const [openChamberVersion, setOpenChamberVersion] = React.useState<string | null>(null);
+  const [openChamberVersion, setRoxSpaceVersion] = React.useState<string | null>(null);
   const [openCodeVersion, setOpenCodeVersion] = React.useState<string | null>(null);
   const updateStore = useUpdateStore(useShallow((s) => ({
     info: s.info,
@@ -45,7 +45,7 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
   React.useEffect(() => {
     let cancelled = false;
 
-    const loadOpenChamberVersion = async () => {
+    const loadRoxSpaceVersion = async () => {
       try {
         const response = await runtimeFetch('/api/system/info', {
           method: 'GET',
@@ -56,13 +56,13 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
         const version = typeof data?.openchamberVersion === 'string' && data.openchamberVersion.trim().length > 0
           ? data.openchamberVersion.trim()
           : null;
-        if (!cancelled) setOpenChamberVersion(version);
+        if (!cancelled) setRoxSpaceVersion(version);
       } catch {
-        if (!cancelled) setOpenChamberVersion(null);
+        if (!cancelled) setRoxSpaceVersion(null);
       }
     };
 
-    void loadOpenChamberVersion();
+    void loadRoxSpaceVersion();
 
     return () => {
       cancelled = true;
@@ -123,7 +123,7 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
     return (
       <div className="w-full space-y-6 pb-2">
         <div className="flex flex-col items-center text-center">
-          <OpenChamberLogo width={72} height={72} />
+          <RoxSpaceLogo width={72} height={72} />
           <h2 className="mt-4 typography-ui-header font-semibold text-foreground">Rox Space</h2>
           <div className="mt-2 space-y-1 typography-ui text-muted-foreground">
             <p>{t('aboutDialog.openChamberVersionLabel', { version: currentVersion })}</p>

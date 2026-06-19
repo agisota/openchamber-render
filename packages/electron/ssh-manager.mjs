@@ -796,7 +796,7 @@ export class ElectronSshManager {
     throw new Error('SSH ControlMaster connection timed out');
   }
 
-  configuredOpenChamberPassword(instance) {
+  configuredRoxSpacePassword(instance) {
     const secret = instance?.auth?.openchamberPassword;
     return secret?.enabled && typeof secret.value === 'string' && secret.value.trim() ? secret.value.trim() : null;
   }
@@ -810,7 +810,7 @@ export class ElectronSshManager {
     }
   }
 
-  async currentRemoteOpenChamberVersion(parsed, controlPath) {
+  async currentRemoteRoxSpaceVersion(parsed, controlPath) {
     try {
       const output = await runRemoteCommand(parsed, controlPath, 'openchamber --version 2>/dev/null || true');
       return parseVersionToken(output);
@@ -819,7 +819,7 @@ export class ElectronSshManager {
     }
   }
 
-  async installOpenChamberManaged(parsed, controlPath, version, preferred) {
+  async installRoxSpaceManaged(parsed, controlPath, version, preferred) {
     const hasBun = await this.remoteCommandExists(parsed, controlPath, 'bun');
     const hasNpm = await this.remoteCommandExists(parsed, controlPath, 'npm');
     const commands = [];
@@ -894,7 +894,7 @@ export class ElectronSshManager {
 
   async startRemoteServerManaged(parsed, controlPath, instance, desiredPort) {
     let envPrefix = 'OPENCHAMBER_RUNTIME=ssh-remote';
-    const secret = this.configuredOpenChamberPassword(instance);
+    const secret = this.configuredRoxSpacePassword(instance);
     if (secret) {
       envPrefix += ` OPENCHAMBER_UI_PASSWORD=${shellQuote(secret)}`;
     }
@@ -952,24 +952,24 @@ export class ElectronSshManager {
       }
       const port = instance.remoteOpenchamber.preferredPort;
       this.setStatus(instance.id, 'server_detecting', 'Probing external Rox Space server', null, null, port, false, 0, false);
-      await this.probeRemoteSystemInfo(parsed, controlPath, port, this.configuredOpenChamberPassword(instance));
+      await this.probeRemoteSystemInfo(parsed, controlPath, port, this.configuredRoxSpacePassword(instance));
       return { remotePort: port, startedByUs: false };
     }
 
     this.setStatus(instance.id, 'remote_probe', 'Checking remote Rox Space installation');
-    const installedVersion = await this.currentRemoteOpenChamberVersion(parsed, controlPath);
+    const installedVersion = await this.currentRemoteRoxSpaceVersion(parsed, controlPath);
     if (!installedVersion) {
       this.setStatus(instance.id, 'installing', 'Installing Rox Space on remote host');
-      await this.installOpenChamberManaged(parsed, controlPath, this.appVersion, instance.remoteOpenchamber.installMethod);
+      await this.installRoxSpaceManaged(parsed, controlPath, this.appVersion, instance.remoteOpenchamber.installMethod);
     } else if (installedVersion !== this.appVersion) {
       this.setStatus(instance.id, 'updating', `Updating remote Rox Space from ${installedVersion} to ${this.appVersion}`);
-      await this.installOpenChamberManaged(parsed, controlPath, this.appVersion, instance.remoteOpenchamber.installMethod);
+      await this.installRoxSpaceManaged(parsed, controlPath, this.appVersion, instance.remoteOpenchamber.installMethod);
     }
 
     this.setStatus(instance.id, 'server_detecting', 'Detecting managed Rox Space server');
     let remotePort = instance.remoteOpenchamber.preferredPort || null;
     let startedByUs = false;
-    if (remotePort && !(await this.remoteServerRunning(parsed, controlPath, remotePort, this.configuredOpenChamberPassword(instance)))) {
+    if (remotePort && !(await this.remoteServerRunning(parsed, controlPath, remotePort, this.configuredRoxSpacePassword(instance)))) {
       remotePort = null;
     }
     if (!remotePort) {
@@ -978,7 +978,7 @@ export class ElectronSshManager {
       remotePort = await this.startRemoteServerManaged(parsed, controlPath, instance, desiredPort);
       startedByUs = true;
     }
-    if (!(await this.remoteServerRunning(parsed, controlPath, remotePort, this.configuredOpenChamberPassword(instance)))) {
+    if (!(await this.remoteServerRunning(parsed, controlPath, remotePort, this.configuredRoxSpacePassword(instance)))) {
       throw new Error('Managed Rox Space server failed to become reachable');
     }
     return { remotePort, startedByUs };

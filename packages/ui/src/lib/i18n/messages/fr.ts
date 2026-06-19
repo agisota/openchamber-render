@@ -232,7 +232,7 @@ export const dict = {
   'sessions.sidebar.header.search.clear': 'Effacer la recherche',
   'sessions.sidebar.footer.actions.settings': 'Paramètres',
   'sessions.sidebar.footer.actions.shortcuts': 'Raccourcis',
-  'sessions.sidebar.footer.actions.aboutOpenChamber': 'À propos de Rox Space',
+  'sessions.sidebar.footer.actions.aboutRoxSpace': 'À propos de Rox Space',
   'sessions.sidebar.footer.actions.update': 'Mise à jour',
   'sessions.sidebar.empty.noSessions.title': 'Aucune session pour l\'instant',
   'sessions.sidebar.empty.noSessions.description': 'Créez votre première session pour commencer à coder.',

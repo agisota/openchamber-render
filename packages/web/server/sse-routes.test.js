@@ -159,7 +159,7 @@ describe('local SSE routes', () => {
     const clients = new Set();
 
     registerScheduledTaskRoutes(app, {
-      getOpenChamberEventClients: () => clients,
+      getRoxSpaceEventClients: () => clients,
       writeSseEvent(res, payload) {
         res.write(`data: ${JSON.stringify(payload)}\n\n`);
       },

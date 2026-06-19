@@ -37,7 +37,7 @@ import { useEffectiveDirectory } from '@/hooks/useEffectiveDirectory';
 import { EditorView } from '@codemirror/view';
 import { copyTextToClipboard } from '@/lib/clipboard';
 import { generateBranchName } from '@/lib/git/branchNameGenerator';
-import { parseProjectPlanMarkdown } from '@/lib/openchamberConfig';
+import { parseProjectPlanMarkdown } from '@/lib/roxSpaceConfig';
 import { createWorktreeSessionForNewBranch } from '@/lib/worktreeSessionCreator';
 import { TodoSendDialog, type TodoSendExecution } from '@/components/session/TodoSendDialog';
 import { Icon } from "@/components/icon/Icon";
@@ -150,7 +150,7 @@ export const PlanView: React.FC<PlanViewProps> = ({ targetPath = null }) => {
   const { t } = useI18n();
   const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
   const createSession = useSessionUIStore((state) => state.createSession);
-  const initializeNewOpenChamberSession = useSessionUIStore((state) => state.initializeNewOpenChamberSession);
+  const initializeNewRoxSpaceSession = useSessionUIStore((state) => state.initializeNewRoxSpaceSession);
   const sendMessage = useSessionUIStore((state) => state.sendMessage);
   const setCurrentSession = useSessionUIStore((state) => state.setCurrentSession);
   const sessions = useSessions();
@@ -570,7 +570,7 @@ export const PlanView: React.FC<PlanViewProps> = ({ targetPath = null }) => {
           }
           sessionId = sessionResult.id;
           directoryHint = sessionResult.directory ?? currentProjectRef.path;
-          initializeNewOpenChamberSession(sessionResult.id, useConfigStore.getState().agents ?? []);
+          initializeNewRoxSpaceSession(sessionResult.id, useConfigStore.getState().agents ?? []);
         }
 
         if (!sessionId) {
@@ -608,7 +608,7 @@ export const PlanView: React.FC<PlanViewProps> = ({ targetPath = null }) => {
         setIsPlanSendSubmitting(false);
       }
     },
-    [canCreateWorktree, createSession, currentProjectRef, initializeNewOpenChamberSession, pendingPlanSend, resolvedPath, routeToChat, sendMessage, sendPromptTitle, setCurrentSession]
+    [canCreateWorktree, createSession, currentProjectRef, initializeNewRoxSpaceSession, pendingPlanSend, resolvedPath, routeToChat, sendMessage, sendPromptTitle, setCurrentSession]
   );
 
   const blockWidgets = React.useMemo(() => {

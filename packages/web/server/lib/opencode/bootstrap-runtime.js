@@ -6,7 +6,7 @@ export const createBootstrapRuntime = (dependencies) => {
     registerAuthAndAccessRoutes,
     registerTtsRoutes,
     registerNotificationRoutes,
-    registerOpenChamberRoutes,
+    registerRoxSpaceRoutes,
     express,
   } = dependencies;
 
@@ -111,7 +111,7 @@ export const createBootstrapRuntime = (dependencies) => {
       setAutoAcceptSession,
     });
 
-    registerOpenChamberRoutes(app, {
+    registerRoxSpaceRoutes(app, {
       fs,
       os,
       path,

@@ -1,4 +1,4 @@
-export const registerOpenChamberRoutes = (app, dependencies) => {
+export const registerRoxSpaceRoutes = (app, dependencies) => {
   const {
     fs,
     path,

@@ -61,7 +61,7 @@ interface DesktopTheme {
   dark: ThemeVariant;
 }
 
-interface OpenChamberTheme {
+interface RoxSpaceTheme {
   metadata: {
     id: string;
     name: string;
@@ -89,7 +89,7 @@ type ResolvedContextTheme = Record<string, string> & {
   thinkingOpacity?: number;
 };
 
-type ThemeSource = DesktopTheme | ContextThemeJson | OpenChamberTheme;
+type ThemeSource = DesktopTheme | ContextThemeJson | RoxSpaceTheme;
 
 type ResolvedTheme = Record<string, ColorValue>;
 
@@ -287,7 +287,7 @@ function isContextTheme(value: ThemeSource): value is ContextThemeJson {
   return Boolean(value && typeof value === 'object' && 'theme' in value && !('light' in value) && !('metadata' in value));
 }
 
-function isOpenChamberTheme(value: ThemeSource): value is OpenChamberTheme {
+function isRoxSpaceTheme(value: ThemeSource): value is RoxSpaceTheme {
   return Boolean(value && typeof value === 'object' && 'metadata' in value && 'colors' in value);
 }
 
@@ -544,7 +544,7 @@ function syntheticTokensFromContextTheme(resolved: ResolvedContextTheme, mode: C
   };
 }
 
-function syntheticTokensFromOpenChamberTheme(theme: OpenChamberTheme): ResolvedTheme {
+function syntheticTokensFromRoxSpaceTheme(theme: RoxSpaceTheme): ResolvedTheme {
   const colors = theme.colors as Record<string, any>;
   const primary = colors.primary ?? {};
   const surface = colors.surface ?? {};
@@ -787,7 +787,7 @@ function buildTheme(
   variant: ThemeVariant,
   resolved: ResolvedTheme,
   mode: 'light' | 'dark',
-): OpenChamberTheme {
+): RoxSpaceTheme {
   const isDark = mode === 'dark';
   const background = token(resolved, 'background-base', isDark ? '#151313' : '#FFFCF0');
   const foreground = token(resolved, 'text-base', isDark ? '#CECDC3' : '#100F0F');
@@ -1240,7 +1240,7 @@ async function main(): Promise<void> {
   }
 
   const resolveThemeVariant = await loadResolver(args.opencodeRoot);
-  const generated: Array<{ fileName: string; theme: OpenChamberTheme }> = [];
+  const generated: Array<{ fileName: string; theme: RoxSpaceTheme }> = [];
 
   for (const spec of args.specs) {
     const themePath = await resolveThemeSpec(spec, args.opencodeRoot);
@@ -1297,7 +1297,7 @@ async function main(): Promise<void> {
       continue;
     }
 
-    if (isOpenChamberTheme(source)) {
+    if (isRoxSpaceTheme(source)) {
       const colors = source.colors as Record<string, any>;
       const variant = syntheticVariantFromResolvedTheme({
         neutral: colors.surface?.background ?? '#151313',
@@ -1325,7 +1325,7 @@ async function main(): Promise<void> {
         theme: buildTheme(
           syntheticTheme,
           variant,
-          syntheticTokensFromOpenChamberTheme(source),
+          syntheticTokensFromRoxSpaceTheme(source),
           source.metadata.variant,
         ),
       });
