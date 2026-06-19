@@ -45,7 +45,7 @@ ENV PATH=${NPM_CONFIG_PREFIX}/bin:${PATH}
 
 RUN npm config set prefix /home/openchamber/.npm-global && mkdir -p /home/openchamber/.npm-global && \
   mkdir -p /home/openchamber/.local /home/openchamber/.config /home/openchamber/.ssh && \
-  npm install -g opencode-ai
+  npm install -g opencode-ai @ai-sdk/openai-compatible
 
 # cloudflared 2026.3.0 - update digest explicitly when upgrading
 COPY --from=cloudflare/cloudflared@sha256:ba461b8aa9c042156dbd39c38657fe7431bafa063220eab8d5330a523863da9f /usr/local/bin/cloudflared /usr/local/bin/cloudflared
@@ -53,6 +53,9 @@ COPY --from=cloudflare/cloudflared@sha256:ba461b8aa9c042156dbd39c38657fe7431bafa
 ENV NODE_ENV=production
 
 COPY scripts/docker-entrypoint.sh /home/openchamber/openchamber-entrypoint.sh
+COPY --chown=openchamber:openchamber deploy/render /home/openchamber/deploy/render
+RUN chmod +x /home/openchamber/deploy/render/bootstrap.sh \
+  /home/openchamber/deploy/render/bin/firecrawl-mcp-wrapper.sh
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages/web/node_modules ./packages/web/node_modules

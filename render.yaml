@@ -1,0 +1,440 @@
+services:
+  - type: web
+    name: openchamber-01
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-01-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "01"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-01
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-02
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-02-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "02"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-02
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-03
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-03-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "03"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-03
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-04
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-04-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "04"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-04
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-05
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-05-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "05"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-05
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-06
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-06-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "06"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-06
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-07
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-07-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "07"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-07
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-08
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-08-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "08"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-08
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-09
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-09-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "09"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-09
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
+
+  - type: web
+    name: openchamber-10
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: openchamber-10-data
+      mountPath: /home/openchamber/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENCHAMBER_HOST
+        value: 0.0.0.0
+      - key: OPENCHAMBER_DATA_ROOT
+        value: /home/openchamber/data
+      - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
+        value: "true"
+      - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
+        value: "true"
+      - key: OPENCHAMBER_WORKSPACE_INDEX
+        value: "10"
+      - key: OPENCHAMBER_WORKSPACE_NAME
+        value: workspace-10
+      - key: OPENCODE_ZED_BASE_URL
+        value: https://api.zed.md/v1
+      - key: OPENCODE_ZED_PROVIDER_ID
+        value: zed
+      - key: OPENCODE_ZED_MODEL_ID
+        value: deepseek
+      - key: OPENCODE_DEFAULT_MODEL
+        value: zed/deepseek
+      - key: OPENCHAMBER_UI_PASSWORD
+        sync: false
+      - key: ZED_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
