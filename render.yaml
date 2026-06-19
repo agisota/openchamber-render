@@ -37,9 +37,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -85,9 +85,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -133,9 +133,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -181,9 +181,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -229,9 +229,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -277,9 +277,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -325,9 +325,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -373,9 +373,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -421,9 +421,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -469,9 +469,9 @@ services:
       - key: OPENCODE_ZED_PROVIDER_ID
         value: zed
       - key: OPENCODE_ZED_MODEL_ID
-        value: deepseek
+        value: cx/gpt-5.5-medium
       - key: OPENCODE_DEFAULT_MODEL
-        value: zed/deepseek
+        value: zed/cx/gpt-5.5-medium
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY

@@ -13,7 +13,7 @@ Ten Render web services run the same Rox Space image:
 - `rox-space-01` through `rox-space-10`
 - one persistent disk per service mounted at `/home/openchamber/data`
 - one default workspace per service: `rox-space-01` through `rox-space-10`
-- OpenCode default model: `zed/deepseek`
+- OpenCode default model: `zed/cx/gpt-5.5-medium`
 - OpenAI-compatible base URL: `https://api.zed.md/v1`
 - MCP: `firecrawl` and `exa`
 - Russian `AGENTS.md` and `README.md` in every seeded workspace
@@ -124,4 +124,4 @@ Render proof after auth/secrets/domain:
 - `/health` returns success on each service
 - UI opens without a session password gate
 - OpenCode starts in the expected `rox-space-NN`
-- `~/.config/opencode/opencode.json` contains `zed/deepseek`, Firecrawl MCP, and Exa MCP
+- `~/.config/opencode/opencode.json` contains `zed/cx/gpt-5.5-medium`, Firecrawl MCP, and Exa MCP

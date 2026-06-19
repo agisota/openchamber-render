@@ -11,7 +11,7 @@ WORKSPACE_NAME="${OPENCHAMBER_WORKSPACE_NAME:-workspace-${WORKSPACE_INDEX}}"
 WORKSPACE_DIR="${OPENCHAMBER_WORKSPACE_DIR:-${HOME}/workspaces/${WORKSPACE_NAME}}"
 OPENCODE_ZED_BASE_URL="${OPENCODE_ZED_BASE_URL:-https://api.zed.md/v1}"
 OPENCODE_ZED_PROVIDER_ID="${OPENCODE_ZED_PROVIDER_ID:-zed}"
-OPENCODE_ZED_MODEL_ID="${OPENCODE_ZED_MODEL_ID:-deepseek}"
+OPENCODE_ZED_MODEL_ID="${OPENCODE_ZED_MODEL_ID:-cx/gpt-5.5-medium}"
 OPENCODE_DEFAULT_MODEL="${OPENCODE_DEFAULT_MODEL:-${OPENCODE_ZED_PROVIDER_ID}/${OPENCODE_ZED_MODEL_ID}}"
 OPENCODE_SKILLS_DIR="${OPENCODE_CONFIG_DIR}/skills"
 UPSTREAM_SKILL_CACHE="${OPENCHAMBER_DATA_ROOT}/upstream-skills"
@@ -113,7 +113,7 @@ write_opencode_config() {
       },
       "models": {
         "${OPENCODE_ZED_MODEL_ID}": {
-          "name": "DeepSeek"
+          "name": "GPT-5.5 Medium"
         }
       }
     }
@@ -173,7 +173,7 @@ write_global_agents() {
 Default runtime:
 - UI: Rox Space web runtime.
 - Agent engine: OpenCode server inside this container.
-- Default provider: `zed/deepseek`.
+- Default provider: `zed/cx/gpt-5.5-medium`.
 - Base URL: `https://api.zed.md/v1`.
 - Search MCP: `firecrawl` and `exa`.
 

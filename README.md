@@ -7,7 +7,7 @@ This branch is the deployment bundle for ten isolated Render runtimes:
 - `rox-space-01` through `rox-space-10`
 - one persistent Render disk per runtime
 - one Russian-first workspace per runtime
-- default model: `zed/deepseek`
+- default model: `zed/cx/gpt-5.5-medium`
 - base URL: `https://api.zed.md/v1`
 - MCP: `firecrawl` and `exa`
 - local Rox Space skill adapters seeded into OpenCode
