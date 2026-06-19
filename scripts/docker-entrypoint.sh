@@ -58,19 +58,30 @@ if [ -f "${SSH_PUBLIC_KEY_PATH}" ]; then
 fi
 
 # Handle UI password environment variables. UI_PASSWORD is kept as a legacy
-# alias; OPENCHAMBER_UI_PASSWORD is the canonical runtime variable.
-if [ -z "${OPENCHAMBER_UI_PASSWORD:-}" ] && [ -n "${UI_PASSWORD:-}" ]; then
-  OPENCHAMBER_UI_PASSWORD="$UI_PASSWORD"
-  export OPENCHAMBER_UI_PASSWORD
-fi
+# alias; OPENCHAMBER_UI_PASSWORD is the canonical runtime variable. A stale
+# password secret must not enable authentication when the runtime is public.
+OPENCHAMBER_ENABLE_UI_PASSWORD="${OPENCHAMBER_ENABLE_UI_PASSWORD:-${OPENCHAMBER_REQUIRE_UI_PASSWORD:-false}}"
+export OPENCHAMBER_ENABLE_UI_PASSWORD
 
-if [ "${OPENCHAMBER_REQUIRE_UI_PASSWORD:-false}" = "true" ] && [ -z "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
-  echo "[entrypoint] error: OPENCHAMBER_UI_PASSWORD is required when OPENCHAMBER_REQUIRE_UI_PASSWORD=true" >&2
-  exit 1
-fi
+if [ "$OPENCHAMBER_ENABLE_UI_PASSWORD" = "true" ]; then
+  if [ -z "${OPENCHAMBER_UI_PASSWORD:-}" ] && [ -n "${UI_PASSWORD:-}" ]; then
+    OPENCHAMBER_UI_PASSWORD="$UI_PASSWORD"
+    export OPENCHAMBER_UI_PASSWORD
+  fi
 
-if [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
-  echo "[entrypoint] UI password set, enabling authentication"
+  if [ "${OPENCHAMBER_REQUIRE_UI_PASSWORD:-false}" = "true" ] && [ -z "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
+    echo "[entrypoint] error: OPENCHAMBER_UI_PASSWORD is required when OPENCHAMBER_REQUIRE_UI_PASSWORD=true" >&2
+    exit 1
+  fi
+
+  if [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
+    echo "[entrypoint] UI password set, enabling authentication"
+  fi
+else
+  if [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ] || [ -n "${OPENCODE_UI_PASSWORD:-}" ] || [ -n "${UI_PASSWORD:-}" ]; then
+    echo "[entrypoint] UI password env present, authentication disabled"
+  fi
+  unset OPENCHAMBER_UI_PASSWORD OPENCODE_UI_PASSWORD UI_PASSWORD
 fi
 
 if [ "${OH_MY_OPENCODE:-false}" = "true" ]; then
@@ -98,11 +109,11 @@ if [ "$#" -gt 0 ]; then
 fi
 
 if ! bun packages/web/bin/cli.js stop --port "${PORT:-3000}" --quiet >/dev/null 2>&1; then
-  echo "[entrypoint] warning: could not stop stale OpenChamber instance, continuing"
+  echo "[entrypoint] warning: could not stop stale Rox Space instance, continuing"
 fi
 
 set -- bun packages/web/bin/cli.js serve --foreground --port "${PORT:-3000}" --host "$OPENCHAMBER_HOST"
-if [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
+if [ "$OPENCHAMBER_ENABLE_UI_PASSWORD" = "true" ] && [ -n "${OPENCHAMBER_UI_PASSWORD:-}" ]; then
   set -- "$@" --ui-password "$OPENCHAMBER_UI_PASSWORD"
 fi
 exec "$@"

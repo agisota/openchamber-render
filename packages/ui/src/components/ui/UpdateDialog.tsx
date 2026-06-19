@@ -30,7 +30,7 @@ interface UpdateDialogProps {
   runtimeType?: 'desktop' | 'web' | 'vscode' | null;
 }
 
-const GITHUB_RELEASES_URL = 'https://github.com/btriapitsyn/openchamber/releases';
+const ROX_SPACE_URL = 'https://rox.one';
 
 type ChangelogSection = {
   version: string;
@@ -205,16 +205,14 @@ export const UpdateDialog: React.FC<UpdateDialogProps> = ({
   const [webUpdateState, setWebUpdateState] = useState<WebUpdateState>('idle');
   const [webError, setWebError] = useState<string | null>(null);
 
-  const releaseUrl = info?.version
-    ? `${GITHUB_RELEASES_URL}/tag/v${info.version}`
-    : GITHUB_RELEASES_URL;
+  const releaseUrl = ROX_SPACE_URL;
 
   const progressPercent = progress?.total
     ? Math.round((progress.downloaded / progress.total) * 100)
     : 0;
 
   const isWebRuntime = runtimeType === 'web';
-  const updateCommand = info?.updateCommand || 'openchamber update';
+  const updateCommand = info?.updateCommand || 'Render redeploy this Rox Space service';
 
   // Reset state when dialog closes
   useEffect(() => {

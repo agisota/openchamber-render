@@ -62,8 +62,8 @@ export const SIDEBAR_SECTIONS: SidebarSectionConfig[] = [
     },
     {
         id: 'settings',
-        label: 'OpenChamber',
-        description: 'OpenChamber app settings: themes, fonts, and preferences.',
+        label: 'Rox Space',
+        description: 'Rox Space app settings: themes, fonts, and preferences.',
         icon: "settings-3",
     },
 ];

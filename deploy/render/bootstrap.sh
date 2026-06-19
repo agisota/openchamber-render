@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-BOOTSTRAP_MARKER="x_openchamber_bootstrap_managed"
+BOOTSTRAP_MARKER="x_rox_space_bootstrap_managed"
+LEGACY_BOOTSTRAP_MARKER="x_openchamber_bootstrap_managed"
 HOME="${HOME:-/home/openchamber}"
 OPENCHAMBER_DATA_ROOT="${OPENCHAMBER_DATA_ROOT:-${HOME}/data}"
 OPENCODE_CONFIG_DIR="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
@@ -63,7 +64,7 @@ install_managed_file() {
   cat > "$temp_file"
 
   ensure_dir "$(dirname "$target")"
-  if [ ! -f "$target" ] || grep -q "$marker" "$target" 2>/dev/null; then
+  if [ ! -f "$target" ] || grep -q "$marker" "$target" 2>/dev/null || grep -q "$LEGACY_BOOTSTRAP_MARKER" "$target" 2>/dev/null; then
     cp "$temp_file" "$target"
   else
     warn "not overwriting user-managed file ${target}"
@@ -146,11 +147,13 @@ EOF
   ensure_dir "$(dirname "$config_path")"
 
   for target in "$config_path" "$config_alias"; do
-    managed_marker="${target}.openchamber-managed"
+    managed_marker="${target}.rox-space-managed"
+    legacy_managed_marker="${target}.openchamber-managed"
 
-    if [ "$manage_config" = "true" ] || [ ! -e "$target" ] || [ -f "$managed_marker" ] || grep -q "$BOOTSTRAP_MARKER" "$target" 2>/dev/null; then
+    if [ "$manage_config" = "true" ] || [ ! -e "$target" ] || [ -f "$managed_marker" ] || [ -f "$legacy_managed_marker" ] || grep -q "$BOOTSTRAP_MARKER" "$target" 2>/dev/null || grep -q "$LEGACY_BOOTSTRAP_MARKER" "$target" 2>/dev/null; then
       rm -f "$target"
       cp "$temp_file" "$target"
+      rm -f "$legacy_managed_marker"
       printf '%s\n' "$BOOTSTRAP_MARKER" > "$managed_marker"
     else
       warn "not overwriting user-managed file ${target}"
@@ -162,13 +165,13 @@ EOF
 
 write_global_agents() {
   install_managed_file "${OPENCODE_CONFIG_DIR}/AGENTS.md" "$BOOTSTRAP_MARKER" <<'EOF'
-<!-- x_openchamber_bootstrap_managed -->
-# OpenChamber Runtime Contract
+<!-- x_rox_space_bootstrap_managed -->
+# Rox Space Runtime Contract
 
 Отвечай пользователю по-русски, если он не попросил другой язык. Команды, пути, API, имена пакетов, ошибки и логи оставляй на английском.
 
 Default runtime:
-- UI: OpenChamber web runtime.
+- UI: Rox Space web runtime.
 - Agent engine: OpenCode server inside this container.
 - Default provider: `zed/deepseek`.
 - Base URL: `https://api.zed.md/v1`.
@@ -208,27 +211,27 @@ EOF
 write_skill_adapters() {
   ensure_dir "$OPENCODE_SKILLS_DIR"
 
-  write_skill_adapter "superpowers" "Superpowers skill pack adapter for OpenCode runtimes." "https://github.com/obra/superpowers" "Use this when the user asks for Superpowers-style disciplined workflow. Prefer verification before completion, systematic debugging, and explicit stop conditions. If upstream Superpowers skills are installed, prefer the more specific upstream skill."
+  write_skill_adapter "superpowers" "Superpowers skill pack adapter for Rox Space runtimes." "rox-space-bootstrap" "Use this when the user asks for Superpowers-style disciplined workflow. Prefer verification before completion, systematic debugging, and explicit stop conditions."
 
-  write_skill_adapter "openagent" "OpenAgent / OpenAgentsControl adapter." "https://github.com/darrenhinde/OpenAgentsControl" "Use this when the user asks for OpenAgent-style agent control or OpenAgentsControl workflows. Keep execution local, reversible, and evidence-backed unless an external authority is required."
+  write_skill_adapter "openagent" "OpenAgent / OpenAgentsControl adapter." "rox-space-bootstrap" "Use this when the user asks for OpenAgent-style agent control or OpenAgentsControl workflows. Keep execution local, reversible, and evidence-backed unless an external authority is required."
 
-  write_skill_adapter "mattpocock-skills" "Matt Pocock skills pack adapter." "https://github.com/mattpocock/skills" "Use this as an entry point for Matt Pocock engineering/productivity skills. If upstream skills are installed, route to the specific skill such as grill-me, triage, diagnose, prototype, or zoom-out."
+  write_skill_adapter "mattpocock-skills" "Matt Pocock skills pack adapter." "rox-space-bootstrap" "Use this as an entry point for Matt Pocock engineering/productivity skills. Route to the closest local Rox Space skill when the user names a specific workflow."
 
-  write_skill_adapter "gpt-tasteskill" "GPT taste skill adapter." "https://github.com/Leonxlnx/taste-skill" "Use this for taste, visual judgment, and critique tasks. Preserve product intent, identify weak visual decisions, and propose concrete improvements."
+  write_skill_adapter "gpt-tasteskill" "GPT taste skill adapter." "rox-space-bootstrap" "Use this for taste, visual judgment, and critique tasks. Preserve product intent, identify weak visual decisions, and propose concrete improvements."
 
-  write_skill_adapter "grill-me" "Grill-me critique adapter." "https://github.com/mattpocock/skills" "Use this when the user asks to be grilled, challenged, or forced to tighten assumptions. Ask pointed questions only when the answer materially changes the result."
+  write_skill_adapter "grill-me" "Grill-me critique adapter." "rox-space-bootstrap" "Use this when the user asks to be grilled, challenged, or forced to tighten assumptions. Ask pointed questions only when the answer materially changes the result."
 
-  write_skill_adapter "grill-with-docs" "Documentation-grounded grill adapter." "https://github.com/mattpocock/skills" "Use this when critique must be grounded in source docs or repo evidence. Do not rely on memory when current docs are available."
+  write_skill_adapter "grill-with-docs" "Documentation-grounded grill adapter." "rox-space-bootstrap" "Use this when critique must be grounded in source docs or repo evidence. Do not rely on memory when current docs are available."
 
-  write_skill_adapter "open-dynamic-workflows" "Open Dynamic Workflows adapter." "local-openchamber-bootstrap" "Use this for dynamic workflow routing where the user wants an explicit, reusable workflow. Keep workflow state visible and verify before transitioning states."
+  write_skill_adapter "open-dynamic-workflows" "Open Dynamic Workflows adapter." "rox-space-bootstrap" "Use this for dynamic workflow routing where the user wants an explicit, reusable workflow. Keep workflow state visible and verify before transitioning states."
 
-  write_skill_adapter "acpx-agent-delegation" "ACP x agent delegation adapter." "local-openchamber-bootstrap" "Use this for bounded subagent/delegation work. Delegate only independent slices, define ownership, integrate results, and own final verification."
+  write_skill_adapter "acpx-agent-delegation" "ACP x agent delegation adapter." "rox-space-bootstrap" "Use this for bounded subagent/delegation work. Delegate only independent slices, define ownership, integrate results, and own final verification."
 
-  write_skill_adapter "understand-anything" "Understand Anything adapter." "https://github.com/Lum1104/Understand-Anything" "Use this to map unfamiliar codebases or topics. Start from structure, identify domains and dependency edges, then summarize in the user's language."
+  write_skill_adapter "understand-anything" "Understand Anything adapter." "rox-space-bootstrap" "Use this to map unfamiliar codebases or topics. Start from structure, identify domains and dependency edges, then summarize in the user's language."
 
-  write_skill_adapter "graphify" "Graphify adapter." "https://github.com/safishamsi/graphify" "Use this when the user asks to turn relationships into graphs. Prefer Mermaid or structured graph output with clear nodes, edges, and labels."
+  write_skill_adapter "graphify" "Graphify adapter." "rox-space-bootstrap" "Use this when the user asks to turn relationships into graphs. Prefer Mermaid or structured graph output with clear nodes, edges, and labels."
 
-  write_skill_adapter "activegraph" "ActiveGraph adapter." "https://github.com/yoheinakajima/activegraph" "Use this when the user asks for active knowledge graph workflows. Keep graph updates explicit: source, node, edge, confidence, and next query."
+  write_skill_adapter "activegraph" "ActiveGraph adapter." "rox-space-bootstrap" "Use this when the user asks for active knowledge graph workflows. Keep graph updates explicit: source, node, edge, confidence, and next query."
 }
 
 copy_upstream_skill_dirs() {
@@ -247,7 +250,7 @@ copy_upstream_skill_dirs() {
     fi
 
     dest="${OPENCODE_SKILLS_DIR}/${skill_name}"
-    if [ -f "${dest}/SKILL.md" ] && ! grep -q "$BOOTSTRAP_MARKER" "${dest}/SKILL.md" 2>/dev/null; then
+    if [ -f "${dest}/SKILL.md" ] && ! grep -q "$BOOTSTRAP_MARKER" "${dest}/SKILL.md" 2>/dev/null && ! grep -q "$LEGACY_BOOTSTRAP_MARKER" "${dest}/SKILL.md" 2>/dev/null; then
       continue
     fi
 
@@ -284,7 +287,8 @@ install_upstream_repo_skills() {
 }
 
 install_upstream_skills() {
-  if [ "${OPENCHAMBER_INSTALL_UPSTREAM_SKILLS:-true}" != "true" ]; then
+  if [ "${OPENCHAMBER_INSTALL_UPSTREAM_SKILLS:-false}" != "true" ]; then
+    rm -rf "${UPSTREAM_SKILL_CACHE:?}/"*
     return 0
   fi
 
@@ -305,7 +309,7 @@ seed_workspace() {
 <!-- ${BOOTSTRAP_MARKER} -->
 # ${WORKSPACE_NAME}
 
-Это русскоязычный OpenChamber workspace ${WORKSPACE_INDEX}.
+Это русскоязычный Rox Space workspace ${WORKSPACE_INDEX}.
 
 Default runtime:
 - Provider: \`${OPENCODE_DEFAULT_MODEL}\`
@@ -324,7 +328,7 @@ EOF
 <!-- ${BOOTSTRAP_MARKER} -->
 # ${WORKSPACE_NAME}
 
-Workspace создан bootstrap-скриптом OpenChamber для Render runtime ${WORKSPACE_INDEX}.
+Workspace создан bootstrap-скриптом Rox Space для Render runtime ${WORKSPACE_INDEX}.
 
 Сюда можно класть проектные файлы, заметки и локальные инструкции. Runtime уже видит OpenCode provider \`${OPENCODE_DEFAULT_MODEL}\`, Firecrawl MCP, Exa MCP и базовый набор skills.
 EOF

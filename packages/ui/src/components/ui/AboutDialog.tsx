@@ -147,7 +147,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
           <OpenChamberLogo width={64} height={64} />
 
           <div className="space-y-1">
-            <h2 className="text-lg font-semibold">OpenChamber</h2>
+            <h2 className="text-lg font-semibold">Rox Space</h2>
             <div className="space-y-0.5 typography-meta text-muted-foreground">
               {displayVersion && (
                 <p>{t('aboutDialog.openChamberVersionLabel', { version: displayVersion })}</p>
@@ -184,32 +184,32 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
           <div className="flex flex-col items-center gap-2 pt-2">
             <div className="flex items-center justify-center gap-4">
               <a
-                href="https://github.com/btriapitsyn/openchamber"
+                href="https://rox.one"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 typography-meta text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Icon name="github-fill" className="h-4 w-4" />
-                <span>GitHub</span>
+                <span>Rox</span>
               </a>
               <a
-                href="https://discord.gg/ZYRSdnwwKA"
+                href="https://app.rox.one"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 typography-meta text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Icon name="discord-fill" className="h-4 w-4" />
-                <span>Discord</span>
+                <span>App</span>
               </a>
             </div>
             <a
-              href="https://x.com/openchamber_dev"
+              href="https://rox.one"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 typography-meta text-muted-foreground hover:text-foreground transition-colors"
             >
               <Icon name="twitter-xfill" className="h-4 w-4" />
-              <span>@openchamber_dev</span>
+              <span>rox.one</span>
             </a>
           </div>
 

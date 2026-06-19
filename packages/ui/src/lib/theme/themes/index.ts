@@ -20,7 +20,7 @@ export const themes: Theme[] = [
   flexokiLightTheme,
   flexokiDarkTheme,
   ...presetThemes.filter(
-    (theme) => theme.metadata.id !== 'openchamber-light' && theme.metadata.id !== 'openchamber-dark',
+    (theme) => !['openchamber-light', 'openchamber-dark', 'rox-space-light', 'rox-space-dark'].includes(theme.metadata.id),
   ),
 ];
 
@@ -29,6 +29,8 @@ export function getThemeById(id: string): Theme | undefined {
   const resolvedId =
     id === 'app-light' ? 'flexoki-light' :
     id === 'app-dark' ? 'flexoki-dark' :
+    id === 'openchamber-light' ? 'rox-space-light' :
+    id === 'openchamber-dark' ? 'rox-space-dark' :
     id;
 
   return themes.find(theme => theme.metadata.id === resolvedId);

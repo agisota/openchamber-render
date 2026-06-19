@@ -1,36 +1,35 @@
-# Render OpenChamber Deployment
+# Render Rox Space Deployment
 
 ## Current State
 
-This repository builds one OpenChamber Docker image. The image already installs `opencode-ai`; this deployment layer adds persistent runtime bootstrap for Render, OpenCode provider defaults, MCP search connectors, Russian workspace instructions, and the requested skill seed set.
+This repository builds one Rox Space runtime image. The image already installs `opencode-ai`; this deployment layer adds persistent runtime bootstrap for Render, OpenCode provider defaults, MCP search connectors, Russian workspace instructions, and the requested skill seed set.
 
 Render CLI is installed locally, but the workstation is not authenticated to Render yet. Secrets and custom domains are intentionally not committed.
 
 ## Target State
 
-Ten Render web services run the same OpenChamber image:
+Ten Render web services run the same Rox Space image:
 
-- `openchamber-01` through `openchamber-10`
+- `rox-space-01` through `rox-space-10`
 - one persistent disk per service mounted at `/home/openchamber/data`
-- one default workspace per service: `workspace-01` through `workspace-10`
+- one default workspace per service: `rox-space-01` through `rox-space-10`
 - OpenCode default model: `zed/deepseek`
 - OpenAI-compatible base URL: `https://api.zed.md/v1`
 - MCP: `firecrawl` and `exa`
 - Russian `AGENTS.md` and `README.md` in every seeded workspace
-- UI password enforced before any public service starts
+- UI password disabled for this controlled runtime deployment
 
 ## Gap / Transformation
 
-Render disks must not mount over `/home/openchamber`, because that path contains the built app. The blueprint mounts disks at `/home/openchamber/data`, then `bootstrap.sh` symlinks OpenChamber/OpenCode config, cache, SSH, and workspace paths into that persistent root.
+Render disks must not mount over `/home/openchamber`, because that path contains the built app. The blueprint mounts disks at `/home/openchamber/data`, then `bootstrap.sh` symlinks Rox Space/OpenCode config, cache, SSH, and workspace paths into that persistent root.
 
 OpenCode keys are supplied only as environment variables:
 
-- `OPENCHAMBER_UI_PASSWORD`
 - `ZED_API_KEY`
 - `FIRECRAWL_API_KEY`
 - `EXA_API_KEY`
 
-`render.yaml` marks these with `sync: false`, so Render stores them as secrets and they are not written to git.
+`render.yaml` marks secret values with `sync: false`, so Render stores them as secrets and they are not written to git.
 
 ## State Diagram
 
@@ -54,7 +53,7 @@ Use the 10-service Render Blueprint.
 Rejected alternatives:
 
 - One Render service with 10 folders: cheaper, but not 10 independent runtimes.
-- One service plus OpenChamber project switching: simpler, but restarts/logs/secrets/storage are shared.
+- One service plus project switching: simpler, but restarts/logs/secrets/storage are shared.
 - Ten manual Render services: works once, but drift is likely.
 
 The blueprint path costs more, but it matches the request for 10 identical runtimes and gives isolated logs, restarts, disks, and domain bindings.
@@ -79,17 +78,17 @@ render blueprints validate ./render.yaml
 6. Attach domains, for example:
 
 ```text
-chamber-01.example.com -> openchamber-01
-chamber-02.example.com -> openchamber-02
+space1.spaceman.space -> rox-space-01
+space2.spaceman.space -> rox-space-02
 ...
-chamber-10.example.com -> openchamber-10
+space10.spaceman.space -> rox-space-10
 ```
 
 7. Verify each runtime:
 
 ```bash
-curl -fsS https://chamber-01.example.com/health
-curl -fsS https://chamber-10.example.com/health
+curl -fsS https://space1.spaceman.space/health
+curl -fsS https://space10.spaceman.space/health
 ```
 
 ## Skills
@@ -108,9 +107,7 @@ curl -fsS https://chamber-10.example.com/health
 - `graphify`
 - `activegraph`
 
-By default it also best-effort clones known upstream GitHub repositories and copies any discovered `SKILL.md` directories into `~/.config/opencode/skills`. If an upstream repository is unavailable or does not contain a portable `SKILL.md`, the adapter remains installed and startup continues.
-
-Set `OPENCHAMBER_INSTALL_UPSTREAM_SKILLS=false` to disable upstream cloning.
+The deployment uses local Rox Space adapter skills. It does not clone upstream skill repositories by default.
 
 ## Verification Proof
 
@@ -125,6 +122,6 @@ Render proof after auth/secrets/domain:
 
 - all 10 services build successfully
 - `/health` returns success on each service
-- UI requires `OPENCHAMBER_UI_PASSWORD`
-- OpenCode starts in the expected `workspace-NN`
+- UI opens without a session password gate
+- OpenCode starts in the expected `rox-space-NN`
 - `~/.config/opencode/opencode.json` contains `zed/deepseek`, Firecrawl MCP, and Exa MCP

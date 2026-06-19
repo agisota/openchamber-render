@@ -83,7 +83,7 @@ export const evaluateServerCompatibility = (
     return {
       ...base,
       status: 'invalid-response',
-      message: 'Server did not return OpenChamber compatibility metadata.',
+      message: 'Server did not return Rox Space compatibility metadata.',
     };
   }
 

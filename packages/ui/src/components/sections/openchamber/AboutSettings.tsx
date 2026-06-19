@@ -10,9 +10,8 @@ import { OpenChamberLogo } from '@/components/ui/OpenChamberLogo';
 import { useI18n } from '@/lib/i18n';
 import { runtimeFetch } from '@/lib/runtime-fetch';
 
-const GITHUB_URL = 'https://github.com/openchamber/openchamber';
-const DISCORD_URL = 'https://discord.gg/ZYRSdnwwKA';
-const X_URL = 'https://x.com/openchamber_dev';
+const ROX_URL = 'https://rox.one';
+const ROX_APP_URL = 'https://app.rox.one';
 
 const MIN_CHECKING_DURATION = 800; // ms
 
@@ -125,7 +124,7 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
       <div className="w-full space-y-6 pb-2">
         <div className="flex flex-col items-center text-center">
           <OpenChamberLogo width={72} height={72} />
-          <h2 className="mt-4 typography-ui-header font-semibold text-foreground">OpenChamber</h2>
+          <h2 className="mt-4 typography-ui-header font-semibold text-foreground">Rox Space</h2>
           <div className="mt-2 space-y-1 typography-ui text-muted-foreground">
             <p>{t('aboutDialog.openChamberVersionLabel', { version: currentVersion })}</p>
             <p>{t('aboutDialog.openCodeVersionLabel', { version: openCodeVersion || t('settings.openchamber.about.state.unknown') })}</p>
@@ -170,34 +169,34 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
         <div className="flex flex-col items-center gap-3 text-center">
           <div className="flex items-center justify-center gap-5">
             <a
-              href={GITHUB_URL}
+              href={ROX_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 typography-ui-label text-muted-foreground transition-colors hover:text-foreground"
             >
               <Icon name="github-fill" className="size-5" />
-              <span>GitHub</span>
+              <span>Rox</span>
             </a>
 
             <a
-              href={DISCORD_URL}
+              href={ROX_APP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 typography-ui-label text-muted-foreground transition-colors hover:text-foreground"
             >
               <Icon name="discord-fill" className="size-5" />
-              <span>Discord</span>
+              <span>App</span>
             </a>
           </div>
 
           <a
-            href={X_URL}
+            href={ROX_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 typography-ui-label text-muted-foreground transition-colors hover:text-foreground"
           >
             <Icon name="twitter-xfill" className="size-5" />
-            <span>@openchamber_dev</span>
+            <span>rox.one</span>
           </a>
         </div>
 
@@ -281,23 +280,23 @@ export const AboutSettings: React.FC<AboutSettingsProps> = ({ initialUpdateDialo
 
         <div className="flex items-center gap-4 px-4 py-4">
           <a
-            href={GITHUB_URL}
+            href={ROX_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground typography-meta transition-colors"
           >
             <Icon name="github-fill" className="h-4 w-4" />
-            <span>GitHub</span>
+            <span>Rox</span>
           </a>
 
             <a
-              href={X_URL}
+              href={ROX_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground typography-meta transition-colors"
           >
             <Icon name="twitter-xfill" className="h-4 w-4" />
-              <span>@openchamber_dev</span>
+              <span>rox.one</span>
             </a>
         </div>
       </div>

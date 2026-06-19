@@ -515,7 +515,7 @@ export const RemoteInstancesPage: React.FC = () => {
     try {
       const serverUrl = normalizeHostUrl(getRuntimeApiBaseUrl()) || window.location.origin;
       const result = await clientAuth.createClient({ label: remoteClientLabel.trim() || 'Paired client' });
-      const payload = buildClientConnectionPayload({ serverUrl, token: result.token, label: remoteClientLabel || 'OpenChamber' });
+      const payload = buildClientConnectionPayload({ serverUrl, token: result.token, label: remoteClientLabel || 'Rox Space' });
       const encoded = encodeClientConnectionPayload(payload);
       setCreatedRemoteClientToken(result.token);
       setPairingUrl(encoded);

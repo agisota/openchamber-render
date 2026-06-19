@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: openchamber-01
+    name: rox-space-01
     runtime: docker
     plan: starter
     region: frankfurt
@@ -8,7 +8,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-01-data
+      name: rox-space-01-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -19,13 +19,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "01"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-01
+        value: rox-space-01
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -34,8 +40,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -44,7 +48,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-02
+    name: rox-space-02
     runtime: docker
     plan: starter
     region: frankfurt
@@ -52,7 +56,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-02-data
+      name: rox-space-02-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -63,13 +67,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "02"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-02
+        value: rox-space-02
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -78,8 +88,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -88,7 +96,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-03
+    name: rox-space-03
     runtime: docker
     plan: starter
     region: frankfurt
@@ -96,7 +104,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-03-data
+      name: rox-space-03-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -107,13 +115,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "03"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-03
+        value: rox-space-03
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -122,8 +136,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -132,7 +144,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-04
+    name: rox-space-04
     runtime: docker
     plan: starter
     region: frankfurt
@@ -140,7 +152,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-04-data
+      name: rox-space-04-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -151,13 +163,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "04"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-04
+        value: rox-space-04
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -166,8 +184,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -176,7 +192,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-05
+    name: rox-space-05
     runtime: docker
     plan: starter
     region: frankfurt
@@ -184,7 +200,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-05-data
+      name: rox-space-05-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -195,13 +211,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "05"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-05
+        value: rox-space-05
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -210,8 +232,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -220,7 +240,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-06
+    name: rox-space-06
     runtime: docker
     plan: starter
     region: frankfurt
@@ -228,7 +248,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-06-data
+      name: rox-space-06-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -239,13 +259,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "06"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-06
+        value: rox-space-06
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -254,8 +280,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -264,7 +288,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-07
+    name: rox-space-07
     runtime: docker
     plan: starter
     region: frankfurt
@@ -272,7 +296,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-07-data
+      name: rox-space-07-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -283,13 +307,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "07"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-07
+        value: rox-space-07
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -298,8 +328,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -308,7 +336,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-08
+    name: rox-space-08
     runtime: docker
     plan: starter
     region: frankfurt
@@ -316,7 +344,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-08-data
+      name: rox-space-08-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -327,13 +355,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "08"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-08
+        value: rox-space-08
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -342,8 +376,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -352,7 +384,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-09
+    name: rox-space-09
     runtime: docker
     plan: starter
     region: frankfurt
@@ -360,7 +392,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-09-data
+      name: rox-space-09-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -371,13 +403,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "09"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-09
+        value: rox-space-09
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -386,8 +424,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
@@ -396,7 +432,7 @@ services:
         sync: false
 
   - type: web
-    name: openchamber-10
+    name: rox-space-10
     runtime: docker
     plan: starter
     region: frankfurt
@@ -404,7 +440,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     disk:
-      name: openchamber-10-data
+      name: rox-space-10-data
       mountPath: /home/openchamber/data
       sizeGB: 1
     envVars:
@@ -415,13 +451,19 @@ services:
       - key: OPENCHAMBER_DATA_ROOT
         value: /home/openchamber/data
       - key: OPENCHAMBER_REQUIRE_UI_PASSWORD
-        value: "true"
+        value: "false"
+      - key: OPENCHAMBER_ENABLE_UI_PASSWORD
+        value: "false"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
-        value: "true"
+        value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
         value: "10"
       - key: OPENCHAMBER_WORKSPACE_NAME
-        value: workspace-10
+        value: rox-space-10
+      - key: OPENCHAMBER_BRAND_NAME
+        value: Rox Space
+      - key: VITE_OPENCHAMBER_BRAND_NAME
+        value: Rox Space
       - key: OPENCODE_ZED_BASE_URL
         value: https://api.zed.md/v1
       - key: OPENCODE_ZED_PROVIDER_ID
@@ -430,8 +472,6 @@ services:
         value: deepseek
       - key: OPENCODE_DEFAULT_MODEL
         value: zed/deepseek
-      - key: OPENCHAMBER_UI_PASSWORD
-        sync: false
       - key: ZED_API_KEY
         sync: false
       - key: FIRECRAWL_API_KEY
