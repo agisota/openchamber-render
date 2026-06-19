@@ -22,6 +22,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -70,6 +72,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -118,6 +122,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -166,6 +172,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -214,6 +222,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -262,6 +272,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -310,6 +322,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -358,6 +372,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -406,6 +422,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX
@@ -454,6 +472,8 @@ services:
         value: "false"
       - key: OPENCHAMBER_ENABLE_UI_PASSWORD
         value: "false"
+      - key: OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN
+        value: "true"
       - key: OPENCHAMBER_INSTALL_UPSTREAM_SKILLS
         value: "false"
       - key: OPENCHAMBER_WORKSPACE_INDEX

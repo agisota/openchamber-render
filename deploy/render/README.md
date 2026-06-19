@@ -122,6 +122,6 @@ Render proof after auth/secrets/domain:
 
 - all 10 services build successfully
 - `/health` returns success on each service
-- UI opens without a session password gate
+- UI opens without a session password gate; `OPENCHAMBER_ALLOW_UNAUTHENTICATED_LAN=true` is set intentionally for public Render access
 - OpenCode starts in the expected `rox-space-NN`
 - `~/.config/opencode/opencode.json` contains `zed/cx/gpt-5.5-medium`, Firecrawl MCP, and Exa MCP
